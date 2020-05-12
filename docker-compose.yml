@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+    nginx:
+        build:
+            context: ./images
+            dockerfile: nginx
+        container_name: lets-discuss-nginx
+        ports:
+            - '80:80'
+        volumes:
+            - './:/var/www'
+            - './nginx:/etc/nginx/conf.d:rw'
+        image: "583459700509.dkr.ecr.ap-southeast-1.amazonaws.com/rll-project-builder/ralali_builder_nginx:latest"
+        networks:
+            - app_network
+    php72:
+        build:
+            context: ./images
+            dockerfile: php72
+        container_name: php72
+        working_dir: /var/www
+        volumes:
+            - './:/var/www'
+        image: "583459700509.dkr.ecr.ap-southeast-1.amazonaws.com/rll-project-builder/ralali_builder_php72_fpm:latest"
+        networks:
+            - app_network
+networks:
+    app_network:
+        driver: bridge
