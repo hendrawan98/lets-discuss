@@ -17,3 +17,21 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group(['middleware' => ['jwt-auth', 'api']], function() {
+    Route::post('/create-forum', 'ForumController@postCreateForum');
+    Route::post('/delete-forum', 'ForumController@deleteForum');
+    Route::post('/like', 'ForumController@postLike');
+    Route::post('/comment', 'CommentController@postComment');
+    Route::post('/delete-comment', 'CommentController@deleteComment');
+});
+
+Route::group(['middleware' => 'api'], function () {
+    Route::get('/validate-username', 'RegisterController@getValidateUsername');
+    Route::get('/view-forum', 'ForumController@getForum');
+    Route::get('/check-like', 'ForumController@getIsliked');
+    Route::get('/list-forum', 'ForumController@getList');
+    Route::get('/comment/{id}', 'CommentController@getComment');
+    Route::post('/registration', 'RegisterController@postRegistration');
+    Route::post('/login', 'LoginController@postLogin');
+});

@@ -10,7 +10,7 @@ services:
         volumes:
             - './:/var/www'
             - './nginx:/etc/nginx/conf.d:rw'
-        image: "583459700509.dkr.ecr.ap-southeast-1.amazonaws.com/rll-project-builder/ralali_builder_nginx:latest"
+        image: "nginx:latest"
         networks:
             - app_network
     php72:
@@ -21,9 +21,26 @@ services:
         working_dir: /var/www
         volumes:
             - './:/var/www'
-        image: "583459700509.dkr.ecr.ap-southeast-1.amazonaws.com/rll-project-builder/ralali_builder_php72_fpm:latest"
+        image: "php72_fpm:latest"
+        networks:
+            - app_network
+    mysql:
+        image: "mysql:5.7.22"
+        container_name: mysql
+        environment:
+            MYSQL_DATABASE: letsdiscussDB
+            MYSQL_USER: adminDB
+            MYSQL_ROOT_PASSWORD: admin123
+        ports:
+            - '3306:3306'
+        volumes:
+            - 'dbdata:/var/lib/mysql/'
+            - './mysql/my.cnf:/etc/mysql/my.cnf'
         networks:
             - app_network
 networks:
     app_network:
         driver: bridge
+volumes:
+    dbdata: 
+        driver: local

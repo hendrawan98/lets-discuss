@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const nodePath = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -12,4 +13,21 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .react('resources/js/pages/homepage/index.js', 'public/dist/homepage.js')
+    .react('resources/js/pages/login/index.js', 'public/dist/login.js')
+    .react('resources/js/pages/register/index.js', 'public/dist/register.js')
+    .react('resources/js/pages/forum/create-forum/index.js', 'public/dist/create-forum.js')
+    .react('resources/js/pages/forum/view-forum/index.js', 'public/dist/view-forum.js')
+    .react('resources/js/pages/forum/list-forum/index.js', 'public/dist/list-forum.js')
+;
+
+mix.webpackConfig({
+    resolve: {
+        alias: {
+            '@components': nodePath.resolve(__dirname, 'resources/js/components'),
+            '@pages': nodePath.resolve(__dirname, 'resources/js/pages'),
+            '@icons': nodePath.resolve(__dirname, 'resources/js/assets/icons')
+        },
+    },
+});

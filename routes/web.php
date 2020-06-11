@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
+Route::get('/login', 'LoginController@index');
+Route::get('/register', 'RegisterController@index');
+Route::get('/create-forum', 'ForumController@createForum');
+Route::get('/view-forum/{title?}', 'ForumController@viewForum');
+Route::get('/list', 'ForumController@listForum');
