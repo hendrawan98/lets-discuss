@@ -20,6 +20,8 @@ mix.js('resources/js/app.js', 'public/js')
     .react('resources/js/pages/forum/create-forum/index.js', 'public/dist/create-forum.js')
     .react('resources/js/pages/forum/view-forum/index.js', 'public/dist/view-forum.js')
     .react('resources/js/pages/forum/list-forum/index.js', 'public/dist/list-forum.js')
+    .react('resources/js/pages/conference/room-conference/index.js', 'public/dist/room-conference.js')
+    .react('resources/js/pages/conference/create-conference/index.js', 'public/dist/create-conferece.js')
 ;
 
 mix.webpackConfig({

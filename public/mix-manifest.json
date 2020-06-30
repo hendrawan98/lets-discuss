@@ -4,6 +4,7 @@
     "/dist/list-forum.js": "/dist/list-forum.js",
     "/dist/login.js": "/dist/login.js",
     "/dist/register.js": "/dist/register.js",
+    "/dist/room-conference.js": "/dist/room-conference.js",
     "/dist/view-forum.js": "/dist/view-forum.js",
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css"

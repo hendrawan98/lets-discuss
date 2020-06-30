@@ -36495,7 +36495,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n  user-select: none;\n  text-decoration: none;\n  color: ", ";\n  ", "\n  ", "\n"]);
+  var data = _taggedTemplateLiteral(["\n  user-select: none;\n  text-decoration: none;\n  color: ", ";\n  ", "\n  ", "\n  font-weight: ", ";\n  font-size: ", ";\n"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -36521,15 +36521,17 @@ function _taggedTemplateLiteral(strings, raw) {
 
 
 var setMargin = function setMargin(payload) {
-  if (payload.margin === '0 0.5em') {
-    return "\n      margin-top: ".concat(typeof payload.marginTop === 'string' ? payload.marginTop : "".concat(payload.marginTop, "px"), ";\n      margin-right: ").concat(typeof payload.marginRight === 'string' ? payload.marginRight : "".concat(payload.marginRight, "px"), ";\n      margin-bottom: ").concat(typeof payload.marginBottom === 'string' ? payload.marginBottom : "".concat(payload.marginBottom, "px"), ";\n      margin-left: ").concat(typeof payload.marginLeft === 'string' ? payload.marginLeft : "".concat(payload.marginLeft, "px"), ";\n    ");
-  } else return "margin: ".concat(typeof payload.margin === 'string' ? payload.margin : "".concat(payload.margin, "px"), ";");
+  if (payload.margin === "0 0.5em") {
+    return "\n      margin-top: ".concat(typeof payload.marginTop === "string" ? payload.marginTop : "".concat(payload.marginTop, "px"), ";\n      margin-right: ").concat(typeof payload.marginRight === "string" ? payload.marginRight : "".concat(payload.marginRight, "px"), ";\n      margin-bottom: ").concat(typeof payload.marginBottom === "string" ? payload.marginBottom : "".concat(payload.marginBottom, "px"), ";\n      margin-left: ").concat(typeof payload.marginLeft === "string" ? payload.marginLeft : "".concat(payload.marginLeft, "px"), ";\n    ");
+  } else return "margin: ".concat(typeof payload.margin === "string" ? payload.margin : "".concat(payload.margin, "px"), ";");
 };
 
 var setPadding = function setPadding(payload) {
-  if (payload.padding === '0 0.5em') {
-    return "\n      padding-top: ".concat(typeof payload.paddingTop === 'string' ? payload.paddingTop : "".concat(payload.paddingTop, "px"), ";\n      padding-right: ").concat(typeof payload.paddingRight === 'string' ? payload.paddingRight : "".concat(payload.paddingRight, "px"), ";\n      padding-bottom: ").concat(typeof payload.paddingBottom === 'string' ? payload.paddingBottom : "".concat(payload.paddingBottom, "px"), ";\n      padding-left: ").concat(typeof payload.paddingLeft === 'string' ? payload.paddingLeft : "".concat(payload.paddingLeft, "px"), ";\n    ");
-  } else return "padding: ".concat(typeof payload.padding === 'string' ? payload.padding : "".concat(payload.padding, "px"), ";");
+  if (payload.padding === "0 0.5em") {
+    return "\n      padding-top: ".concat(typeof payload.paddingTop === "string" ? payload.paddingTop : "".concat(payload.paddingTop, "px"), ";\n      padding-right: ").concat(typeof payload.paddingRight === "string" ? payload.paddingRight : "".concat(payload.paddingRight, "px"), ";\n      padding-bottom: ").concat(typeof payload.paddingBottom === "string" ? payload.paddingBottom : "".concat(payload.paddingBottom, "px"), ";\n      padding-left: ").concat(typeof payload.paddingLeft === "string" ? payload.paddingLeft : "".concat(payload.paddingLeft, "px"), ";\n    ");
+  } else {
+    return "padding: ".concat(typeof payload.padding === "string" ? payload.padding : "".concat(payload.padding, "px"), ";");
+  }
 };
 
 var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].a(_templateObject(), function (props) {
@@ -36538,11 +36540,16 @@ var StyledLink = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].a(_te
   return setMargin(props);
 }, function (props) {
   return setPadding(props);
+}, function (props) {
+  return props.fontWeight;
+}, function (props) {
+  return props.size;
 });
 
 function Link(_ref) {
   var children = _ref.children,
       color = _ref.color,
+      fontWeight = _ref.fontWeight,
       href = _ref.href,
       padding = _ref.padding,
       paddingTop = _ref.paddingTop,
@@ -36553,10 +36560,12 @@ function Link(_ref) {
       marginTop = _ref.marginTop,
       marginRight = _ref.marginRight,
       marginBottom = _ref.marginBottom,
-      marginLeft = _ref.marginLeft;
+      marginLeft = _ref.marginLeft,
+      size = _ref.size;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLink, {
     href: href,
     color: color,
+    fontWeight: fontWeight,
     padding: padding,
     paddingTop: paddingTop,
     paddingRight: paddingRight,
@@ -36566,12 +36575,14 @@ function Link(_ref) {
     marginTop: marginTop,
     marginRight: marginRight,
     marginBottom: marginBottom,
-    marginLeft: marginLeft
+    marginLeft: marginLeft,
+    size: size
   }, children);
 }
 
 Link.propTypes = {
   color: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
+  fontWeight: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   href: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string,
   padding: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number]),
   paddingTop: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number]),
@@ -36582,21 +36593,24 @@ Link.propTypes = {
   marginTop: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number]),
   marginRight: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number]),
   marginBottom: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number]),
-  marginLeft: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number])
+  marginLeft: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.oneOfType([prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string, prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.number]),
+  size: prop_types__WEBPACK_IMPORTED_MODULE_1___default.a.string
 };
 Link.defaultProps = {
-  href: '/',
-  color: '#FFFFFF',
-  padding: '0 0.5em',
+  color: "#FFFFFF",
+  fontWeight: "normal",
+  href: "/",
+  padding: "0 0.5em",
   paddingTop: 0,
-  paddingRight: '0.5em',
+  paddingRight: "0.5em",
   paddingBottom: 0,
-  paddingLeft: '0.5em',
-  margin: '0 0.5em',
+  paddingLeft: "0.5em",
+  margin: "0 0.5em",
   marginTop: 0,
-  marginRight: '0.5em',
+  marginRight: "0.5em",
   marginBottom: 0,
-  marginLeft: '0.5em'
+  marginLeft: "0.5em",
+  size: '16px'
 };
 /* harmony default export */ __webpack_exports__["default"] = (Link);
 
@@ -36980,6 +36994,16 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
+function _templateObject7() {
+  var data = _taggedTemplateLiteral(["\n  border-bottom: 1px solid black;\n\n  &:last-child {\n    border-botton: none;\n  }\n"]);
+
+  _templateObject7 = function _templateObject7() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject6() {
   var data = _taggedTemplateLiteral(["\n  padding-top: 20px;\n"]);
 
@@ -37075,6 +37099,7 @@ var TitleContainer = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].d
   return props["float"];
 });
 var SectionContent = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject6());
+var ConferenceContent = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].div(_templateObject7());
 
 function Homepage() {
   var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_4__["default"]();
@@ -37088,10 +37113,15 @@ function Homepage() {
       forum = _React$useState4[0],
       setForum = _React$useState4[1];
 
-  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState(false),
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState([]),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
-      copied = _React$useState6[0],
-      setCopied = _React$useState6[1];
+      conference = _React$useState6[0],
+      setConference = _React$useState6[1];
+
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState(false),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      copied = _React$useState8[0],
+      setCopied = _React$useState8[1];
 
   react__WEBPACK_IMPORTED_MODULE_1___default.a.useEffect(function () {
     var getInit = /*#__PURE__*/function () {
@@ -37104,8 +37134,11 @@ function Homepage() {
                   // console.log(res)
                   setForum(res.data);
                 });
+                axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/api/list-conference?sort&&limit').then(function (res) {
+                  setConference(res.data);
+                });
 
-              case 1:
+              case 2:
               case "end":
                 return _context.stop();
             }
@@ -37150,7 +37183,7 @@ function Homepage() {
       size: 24,
       fontWeight: "bold"
     }, val && val.forumTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_6__["CopyToClipboard"], {
-      text: "http://letsdiscuss.loc/view-forum/".concat(val.forumTitle.replace(' ', '-')),
+      text: "/view-forum/".concat(val.forumTitle.replace(' ', '-')),
       onCopy: function onCopy() {
         return setCopied(true);
       }
@@ -37159,7 +37192,7 @@ function Homepage() {
       width: "20px"
     }), "share")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_12__["default"], {
       color: "#FFAB40",
-      href: "http://letsdiscuss.loc/view-forum/".concat(val.forumTitle.replace(' ', '-'))
+      href: "/view-forum/".concat(val.forumTitle.replace(' ', '-'))
     }, "LEARN MORE"));
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(RightContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SectionTitle, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(TitleContainer, {
     "float": "left"
@@ -37171,9 +37204,25 @@ function Homepage() {
     fontWeight: "bold",
     lineHeight: 45,
     type: "span"
-  }, "Conference"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SectionContent, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_card__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, "Conference")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(TitleContainer, {
+    "float": "right"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    width: "263px",
+    height: "43px",
+    backgroundColor: "#1B751D",
+    color: "#FFFFFF",
+    onClick: function onClick() {
+      return window.location.href = '/create-conference';
+    }
+  }, "Buat Conference"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SectionContent, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_card__WEBPACK_IMPORTED_MODULE_8__["default"], {
     marginTop: 10
-  }, "lalala")))));
+  }, "lalala", conference.length >= 0 && conference.map(function (val, key) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ConferenceContent, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_12__["default"], {
+      size: 24,
+      fontWeight: "bold",
+      href: "/conference/".concat(val.id)
+    }, val && val.forumTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, val && val.userName), " ", val && val.created_at.split('T')[0]);
+  }))))));
 }
 
 Object(react_dom__WEBPACK_IMPORTED_MODULE_2__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Homepage, null), document.getElementById('homepage'));

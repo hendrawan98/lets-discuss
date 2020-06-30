@@ -102,11 +102,11 @@ class Users extends Authenticatable implements JWTSubject
     }
 
     public function postLogin(array $data) {
-        $token = $this->getToken('test30', 'dGVzdA=='); // generate user token
+        $token = $this->getToken($data['username'], \Hash::make($data['password'])); // generate user token
         
         if (!is_string($token))  return response()->json(['success'=>false,'data'=>'Token generation failed'], 201);
         
-        $user = $this->where('userName', 'test30')->get()->first();
+        $user = $this->where('userName', $data['username'])->get()->first();
 
         $this->where('userName', $data['username'])->update(['accessToken' => $token]);
         
