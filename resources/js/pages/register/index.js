@@ -62,6 +62,10 @@ const FormGroupRadio = styled.div`
 const postRegister = (data) => {
   axios.post('/api/registration', data)
     .then(res => {
+      console.log('res', res)
+      const profile = JSON.stringify(res.data.profile)
+      console.log('profile2', profile)
+      localStorage.setItem('profile', JSON.stringify(res.data.profile))
       window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/'
     })
 }
@@ -96,42 +100,42 @@ function Register() {
     
     if (validUsername !== 'loading') {
       if(!fullName) {
-        alert('Nama Lengkap anda wajib diisi')
+        alert('Fullname must be filled')
         isError = true
       }
   
       if(!address) {
-        alert('alamat anda wajib diisi')
+        alert('Address must be filled')
         isError = true
       }
   
       if(!username) {
-        alert('username wajib diisi')
+        alert('username must be filled')
         isError = true
       }
   
       if(username && !validUsername) {
-        alert(`${username} sudah dipakai silahkan gunakan username lain`)
+        alert(`${username} not available, please use other username`)
         isError = true
       }
   
       if((date && new Date(date) >= new Date()) || !date) {
-        alert('Tanggal lahir harus lebih kecil dari tanggal hari ini')
+        alert('Birth date must less then current date')
         isError = true
       }
   
       if((email && ((!email.includes('@') || (email.includes('@') && (email.indexOf('@') === 0 || email.indexOf('@') === email.length - 1))) || !email.includes('@') || (email.includes('.') && (email.indexOf('.') === 0 || email.indexOf('@') === email.length - 1)))) || !email) {
-        alert('format email salah')
+        alert('Please check your email format')
         isError = true
       }
   
       if((phone && (phone.length < 10 || phone.length > 12)) || !phone) {
-        alert('nomor telpon seluler yang dimasukan salah')
+        alert('Please check your phone number')
         isError = true
       }
   
       if(password !== confirmPassword) {
-        alert('password yang dimasukkan tidak sama')
+        alert('Password you insert not match')
         isError = true
       }
       
@@ -181,11 +185,6 @@ function Register() {
             </FormGroup>
           </Card>
         </LeftContainer>
-        <RightContainer>
-          <Card width="28em">
-            test
-          </Card>
-        </RightContainer>
       </Container>
     </Layout>
   )

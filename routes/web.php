@@ -19,4 +19,5 @@ Route::get('/register', 'RegisterController@index');
 Route::get('/create-forum', 'ForumController@createForum');
 Route::get('/view-forum/{title?}', 'ForumController@viewForum');
 Route::get('/list', 'ForumController@listForum');
-Route::get('/conference', 'ConferenceController@index');
+Route::get('/conference/{title?}', 'ConferenceController@viewConference');
+Route::get('/create-conference', 'ConferenceController@createConference');

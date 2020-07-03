@@ -88,7 +88,7 @@ class Users extends Authenticatable implements JWTSubject
             return response()->json(['success'=>false, 'message'=>'failed insert data']);
         }
 
-            $token = $this->getToken($data['username'], \Hash::make($data['password'])); // generate user token
+            $token = $this->getToken($data['username'], $data['password']); // generate user token
         
             if (!is_string($token))  return response()->json(['success'=>false,'data'=>'Token generation failed'], 201);
             
@@ -102,7 +102,7 @@ class Users extends Authenticatable implements JWTSubject
     }
 
     public function postLogin(array $data) {
-        $token = $this->getToken($data['username'], \Hash::make($data['password'])); // generate user token
+        $token = $this->getToken($data['username'], $data['password']); // generate user token
         
         if (!is_string($token))  return response()->json(['success'=>false,'data'=>'Token generation failed'], 201);
         

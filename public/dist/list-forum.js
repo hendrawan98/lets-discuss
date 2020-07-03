@@ -36324,9 +36324,11 @@ function Header() {
     height: "31px"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
     paddingLeft: "1em",
-    margin: "0em 3em 0em 4.5em"
+    margin: "0em 3em 0em 4.5em",
+    href: "/view-forum"
   }, "Forum"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    margin: "0em 4.5em 0em 3em"
+    margin: "0em 4.5em 0em 3em",
+    href: "/conference"
   }, "Conference"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: function onSubmit(e) {
       return handleSearch(e);
@@ -36360,7 +36362,7 @@ function Header() {
   }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
     margin: "0em 0em 0em 4.5em",
     onClick: function onClick() {
-      return window.location = '/';
+      return window.location = '#';
     }
   }, profile.userName));
 }
@@ -36958,7 +36960,7 @@ function ListForum() {
         fontWeight: "bold"
       }, val.forumTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_paragraph__WEBPACK_IMPORTED_MODULE_10__["default"], {
         size: 20
-      }, val.forumContent))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
+      }, val.forumDescription))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         style: {
           "float": 'right',
           width: '14.9em'
@@ -36972,10 +36974,10 @@ function ListForum() {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
         onClick: function onClick() {
-          return window.location.href = "http://letsdiscuss.loc/view-forum/".concat(val.forumTitle.replace(' ', '-'));
+          return window.location.href = "/view-forum/".concat(val.forumTitle.split(' ').join('-'));
         }
-      }, "Baca"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_6__["CopyToClipboard"], {
-        text: "http://letsdiscuss.loc/view-forum/".concat(val.forumTitle.replace(' ', '-')),
+      }, "Read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_6__["CopyToClipboard"], {
+        text: "http://localhost/view-forum/".concat(val.forumTitle.split(' ').join('-')),
         onCopy: function onCopy() {
           return setCopied(true);
         },
@@ -37006,7 +37008,7 @@ function ListForum() {
       style: {
         marginRight: '0.5em'
       }
-    }, "Urutkan:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("select", {
+    }, "sortBy:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("select", {
       style: {
         width: '10em'
       },
@@ -37031,7 +37033,7 @@ function ListForum() {
       onClick: function onClick() {
         return window.location.href = '/create-forum';
       }
-    }, "Buat Forum")));
+    }, "Create Forum")));
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_layout__WEBPACK_IMPORTED_MODULE_9__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Container, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {

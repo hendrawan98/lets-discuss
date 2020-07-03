@@ -7,8 +7,15 @@ use App\Conference;
 
 class ConferenceController extends Controller
 {
-    public function index() {
+    public function viewConference($title = null) {
+        if(!isset($_COOKIE['acct'])) return redirect('/login');
+        if(!isset($title)) return view('listConference');
         return view('roomConference');
+    }
+
+    public function createConference() {
+        if(!isset($_COOKIE['acct'])) return redirect('/login');
+        return view('createConference');
     }
 
     public function getList(Conference $conference, Request $request) {
@@ -28,10 +35,8 @@ class ConferenceController extends Controller
     }
 
     public function postConference(Conference $conference, Request $request) {
-        $result = $conference->postConference($result->all());
+        $result = $conference->postConference($request->all());
         $response = json_decode($result->getContent(), true);
-        if($response['success']) {
-            return response()->json($response['data'], $result->getStatusCode());
-        }
+        return response()->json('', $result->getStatusCode());
     }
 }

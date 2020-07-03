@@ -36384,9 +36384,11 @@ function Header() {
     height: "31px"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
     paddingLeft: "1em",
-    margin: "0em 3em 0em 4.5em"
+    margin: "0em 3em 0em 4.5em",
+    href: "/view-forum"
   }, "Forum"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    margin: "0em 4.5em 0em 3em"
+    margin: "0em 4.5em 0em 3em",
+    href: "/conference"
   }, "Conference"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: function onSubmit(e) {
       return handleSearch(e);
@@ -36420,7 +36422,7 @@ function Header() {
   }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
     margin: "0em 0em 0em 4.5em",
     onClick: function onClick() {
-      return window.location = '/';
+      return window.location = '#';
     }
   }, profile.userName));
 }
@@ -37174,7 +37176,7 @@ function Homepage() {
     onClick: function onClick() {
       return window.location.href = '/create-forum';
     }
-  }, "Buat Forum"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SectionContent, null, forum.length >= 0 && forum.map(function (val, key) {
+  }, "Create Forum"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SectionContent, null, forum.length >= 0 && forum.map(function (val, key) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_card__WEBPACK_IMPORTED_MODULE_8__["default"], {
       marginTop: 10,
       padding: "20px",
@@ -37183,7 +37185,7 @@ function Homepage() {
       size: 24,
       fontWeight: "bold"
     }, val && val.forumTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_6__["CopyToClipboard"], {
-      text: "/view-forum/".concat(val.forumTitle.replace(' ', '-')),
+      text: "/view-forum/".concat(val.forumTitle.split(' ').join('-')),
       onCopy: function onCopy() {
         return setCopied(true);
       }
@@ -37192,7 +37194,7 @@ function Homepage() {
       width: "20px"
     }), "share")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_12__["default"], {
       color: "#FFAB40",
-      href: "/view-forum/".concat(val.forumTitle.replace(' ', '-'))
+      href: "/view-forum/".concat(val.forumTitle.split(' ').join('-'))
     }, "LEARN MORE"));
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(RightContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SectionTitle, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(TitleContainer, {
     "float": "left"
@@ -37207,21 +37209,22 @@ function Homepage() {
   }, "Conference")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(TitleContainer, {
     "float": "right"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    width: "263px",
+    width: "200px",
     height: "43px",
     backgroundColor: "#1B751D",
     color: "#FFFFFF",
     onClick: function onClick() {
       return window.location.href = '/create-conference';
     }
-  }, "Buat Conference"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SectionContent, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_card__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  }, "Create Conference"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(SectionContent, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_card__WEBPACK_IMPORTED_MODULE_8__["default"], {
     marginTop: 10
-  }, "lalala", conference.length >= 0 && conference.map(function (val, key) {
+  }, conference.length >= 0 && conference.map(function (val, key) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(ConferenceContent, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_12__["default"], {
-      size: 24,
+      size: "24",
+      color: "black",
       fontWeight: "bold",
-      href: "/conference/".concat(val.id)
-    }, val && val.forumTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, val && val.userName), " ", val && val.created_at.split('T')[0]);
+      href: "/conference"
+    }, val && val.viConTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, val && val.userName), " ", val && val.created_at.split('T')[0]);
   }))))));
 }
 

@@ -32,9 +32,9 @@ class RegisterController extends BaseController
         $content = json_decode($result->getContent(), true);
         if ($content['success']) {
             $data = $content['data'];
-            $masak = Cookie::make('acct', $data['auth_token'], 120, null, null , false, false);
-            // return response()->json($content['data'], $result->getStatusCode())->cookie($masak);
-            return redirect('/');
+            $cookie = Cookie::make('acct', $data['auth_token'], 120, null, null , false, false);
+            return response()->json($content['data'], $result->getStatusCode())->cookie($cookie);
+            // return redirect('/')->cookie($cookie);
         }
     }
 }

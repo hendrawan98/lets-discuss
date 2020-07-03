@@ -35,18 +35,21 @@ const SectionContent = styled.div`
   padding-top: 20px;
 `
 
-const doLogin = (username, password) => {
+const doLogin = (username, password, e) => {
+  e.preventDefault()
   const cookies = new Cookies()
-  !username && password && alert('username wajib diisi')
-  username && !password && alert('password wajib diisi')
-  !username && !password && alert('username dan password wajib diisi')
+  !username && password && alert('username must be filled')
+  username && !password && alert('password must be filled')
+  !username && !password && alert('username and password must be filled')
   if(username && password) {
-    axios.post('/api/login', { username: username, password: password } )
+    axios.post('/api/login', { username: username, password: btoa(password) } )
       .then(res => {
         const profile = JSON.stringify(res.data.profile)
         localStorage.setItem('profile', JSON.stringify(res.data.profile))
         // alert('a')
         window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/'
+      }, res => {
+        alert('please login using valid username and password')
       })
   }
 }
@@ -60,9 +63,11 @@ function Login() {
         <div style={{display: 'block'}}>
           <Logo width="270px" height="47px" />
           <Card marginTop={10} padding="20px">
-            <input placeholder="Username" onChange={ e => setUsername(e.target.value) } style={{display: 'block', width: '100%', height: '25px'}} />
-            <input placeholder="Password" onChange={ e => setPassword(e.target.value) } style={{display: 'block', width: '100%', height: '25px'}} />
-            <Button onClick={() => doLogin(username, password)}>Login</Button>
+            <form onSubmit={e => doLogin(username, password, e)}>
+              <input placeholder="Username" onChange={ e => setUsername(e.target.value) } style={{display: 'block', width: '100%', height: '25px'}} />
+              <input type="password" placeholder="Password" onChange={ e => setPassword(e.target.value) } style={{display: 'block', width: '100%', height: '25px'}} />
+              <Button onClick={e => doLogin(username, password, e)}>Login</Button>
+            </form>
           </Card>
         </div>
       </Container>

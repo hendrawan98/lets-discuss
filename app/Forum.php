@@ -58,8 +58,10 @@ class Forum extends Model
     }
 
     public function getForum(array $data) {
+        $title = str_replace('%20', ' ', $data['title']);
+        $title2 = str_replace('-', ' ', $title);
         try{
-            $response = $this->where('forumTitle', $data['title'])->get()->first();
+            $response = $this->where('forumTitle', $title2)->get()->first();
         }catch(Exception $e) {
             return response()->json(['success' => false, 'message' => 'failed get forum']);
         }
@@ -80,7 +82,7 @@ class Forum extends Model
         }catch(Exception $e) {
             return response()->json(['success' => false, 'message' => 'failed creating forum'], 400);
         }
-        return response()->json(['success' => true, 'message' => 'success creating forum'], 204);
+        return response()->json(['success' => true, 'message' => 'success creating forum'], 201);
     }
 
     public function postLike(array $data) {

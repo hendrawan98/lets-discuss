@@ -35,12 +35,13 @@ const NeatRTC = (config, sendCallback) => {
   let streamRemoteConnected = false
   let videoIdLocal = config.videoIdLocal || false
   let videoIdRemote = config.videoIdRemote || false
+  let videoIdScreen = config.videoIdScreen || false
   let connected = config.connected || false
   let mediaStreamConnected = config.mediaStreamConnected || false
   let mediaStreamRemoved = config.mediaStreamRemoved || false
   let mediaStreamRemoteRemoved = config.mediaStreamRemoteRemoved || false
 
-  if (!videoIdLocal || !videoIdRemote || !connected || !mediaStreamConnected ||
+  if (!videoIdLocal || !videoIdRemote || !videoIdScreen || !connected || !mediaStreamConnected ||
     !mediaStreamRemoved || !mediaStreamRemoteRemoved) {
     throw new Error('Parameters not correctly set!')
   }
@@ -667,6 +668,24 @@ const NeatRTC = (config, sendCallback) => {
         datachannelList['_default'].send(JSON.stringify(DATA))
         log('MediaStreamStop message sent')
       }
+    } else if (type.toLowerCase() === 'startshare') {
+      if (adapter.browserDetails.browser == 'firefox') {
+        adapter.browserShim.shimGetDisplayMedia(window, 'screen');
+      }
+      let videoElementScreen = document.getElementById(videoIdScreen)
+      let stream = async () => {
+        let mediaStream = await navigator.mediaDevices.getDisplayMedia({ video: true });
+        videoElementScreen.srcObject = mediaStream;
+      }
+      stream()
+    } else if (type.toLowerCase() === 'stopshare') {
+      let videoElementScreen = document.getElementById(videoIdScreen)
+      videoElementScreen.pause()
+      let stream = async () => {
+        let mediaStream = await navigator.mediaDevices.getDisplayMedia({ video: false });
+        videoElementScreen.srcObject = mediaStream;
+      }
+      stream()
     }
   }
 

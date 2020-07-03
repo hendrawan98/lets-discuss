@@ -1,5 +1,6 @@
 import socketIO from 'socket.io-client';
-const socket = socketIO('http://localhost:3001', {transports: ['websocket']});
+const socket = socketIO('https://88ad4b78e902.ngrok.io', { transports: ['websocket'] });
+// const socket = socketIO('http://localhost:3001', {transports: ['websocket']});
 
 const join = (room, callback) => {
   // Listen for 'join' messages

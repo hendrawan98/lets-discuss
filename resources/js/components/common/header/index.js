@@ -33,8 +33,8 @@ function Header() {
   return (
     <Wrapper>
       <Logo width="149px" height="31px" />
-      <Link paddingLeft="1em" margin="0em 3em 0em 4.5em">Forum</Link>
-      <Link margin="0em 4.5em 0em 3em">Conference</Link>
+      <Link paddingLeft="1em" margin="0em 3em 0em 4.5em" href="/view-forum">Forum</Link>
+      <Link margin="0em 4.5em 0em 3em" href="/conference">Conference</Link>
       <form onSubmit={e => handleSearch(e)}>
         <Input loggedin={isLoggedin} onChange={ e => setSearch(e.target.value) } />
       </form>
@@ -45,7 +45,7 @@ function Header() {
           <Button margin="0em 0em 0em 3em" onClick={() => window.location = '/register'} backgroundColor="#00CC00" color="#FFFFFF">Register</Button>
         </React.Fragment>
       )}
-      { isLoggedin && <Link margin="0em 0em 0em 4.5em" onClick={() => window.location = '/'} >{profile.userName}</Link>}
+      { isLoggedin && <Link margin="0em 0em 0em 4.5em" onClick={() => window.location = '#'} >{profile.userName}</Link>}
     </Wrapper>
   )
 }

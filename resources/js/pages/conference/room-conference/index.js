@@ -45,6 +45,7 @@ function RoomConference() {
       devMode: true,
       videoIdLocal: 'localVideo',
       videoIdRemote: 'remoteVideo',
+      videoIdScreen: 'screenVideo',
       connected: connected,
       mediaStreamConnected: mediaStreamConnected,
       mediaStreamRemoved: mediaStreamRemoved,
@@ -63,18 +64,26 @@ function RoomConference() {
     }
   )
   const [rtc, setRtc] = React.useState(null)
-  const [remote] = React.useState([])
+  const [cam, setCam] = React.useState(true)
+  const [share, setShare] = React.useState(false)
+  const [client, setClient] = React.useState(1)
 
   const sendSignalingMessage = (message) => {
     send('signaling', {room: 'testing', message: message});
   }
 
   const startCamera = () => {
+    setCam(!cam)
     rtc.media('start');
   }
 
   const stopCamera = () => {
+    setCam(!cam)
     rtc.media('stop');
+  }
+
+  const shareCamera = () => {
+    setShare(!share)
   }
 
   const stopRemoteCamera = () => {
@@ -87,6 +96,12 @@ function RoomConference() {
     rtc.send('text', { time });
   }
 
+  const title = () => {
+    const url = window.location.href.split('/')
+    const title = url[url.length - 1].split('-').join(' ')
+    return title
+  }
+
   React.useEffect(() => {
     setRtc(new NeatRTC(config, sendSignalingMessage))
   }, [])
@@ -96,6 +111,7 @@ function RoomConference() {
       // Socket.IO join messages from server
       join('testing', message => {
         const { clientCount } = message;
+        setClient(clientCount)
         if (clientCount >= 2) {
           rtc.connect();
         };
@@ -108,10 +124,28 @@ function RoomConference() {
     { rtc && startCamera() }
   }, [rtc])
 
+  React.useEffect(() => {
+    if (rtc) {
+      if(share) {
+        rtc.media('startShare');
+      }
+    }
+  }, [rtc, share])
+
   return (
     <Layout>
-      <video id='localVideo' width="300" height="200" autoPlay={true}></video>
+      <h2>{title()}</h2>
+      {share ? (<div><video id='screenVideo' width="600" height="350" autoPlay={true} muted></video> <br /></div>) : <div><br /></div>}
+      <video id='localVideo' width="300" height="200" autoPlay={true} muted></video>
       <video id="remoteVideo" width="300" height="200" autoPlay={true}></video>
+      <br />
+      <button onClick={() => shareCamera()}>{share ? 'Stop share screen' : 'Start share screen'}</button>
+      {cam ? 
+        <button onClick={() => stopCamera()}>Stop camera</button> :
+        <button onClick={() => startCamera()}>Start camera</button>
+      }
+      <button onClick={() => shareCamera()}>Mute</button>
+      <label>Total participant: {client}</label>
       {/* <div className="local-container">
         <h2>Local</h2>
         <video id="localVideo" width="300" height="200" autoPlay={true}></video>

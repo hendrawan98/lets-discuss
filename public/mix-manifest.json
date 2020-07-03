@@ -1,6 +1,8 @@
 {
+    "/dist/create-conference.js": "/dist/create-conference.js",
     "/dist/create-forum.js": "/dist/create-forum.js",
     "/dist/homepage.js": "/dist/homepage.js",
+    "/dist/list-conference.js": "/dist/list-conference.js",
     "/dist/list-forum.js": "/dist/list-forum.js",
     "/dist/login.js": "/dist/login.js",
     "/dist/register.js": "/dist/register.js",

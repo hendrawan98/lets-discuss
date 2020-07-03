@@ -64,9 +64,9 @@ const LikedButton = styled(Like)`
 const doComment = (comment, comments, setComment, forum) => {
   const cookie = new Cookies()
   { !comment && alert('comment content wajib diisi') }
-  {
-    comment && !!cookie.get('acct') &&
-    axios.post('/api/comment', {comment: comment, forumId: forum.id, token: cookie.get('acct')})
+  if (comment && !!cookie.get('acct')) {
+    const confirm = window.confirm('do you want to add this comment?')
+    {confirm && axios.post('/api/comment', {comment: comment, forumId: forum.id, token: cookie.get('acct')})
       .then(res => {
         console.log(res)
         comments.push(res.data)
@@ -74,18 +74,20 @@ const doComment = (comment, comments, setComment, forum) => {
       })
       .catch(() => {
         setComment('')
-      })
+      })}
   }
 }
 
 const handleDeleteForum = id => {
   const cookie = new Cookies()
-  axios.post('/api/delete-forum', { id: id, token: cookie.get('acct') })
+  const confirm = window.confirm('do you want to delete this forum?')
+  {confirm && axios.post('/api/delete-forum', { id: id, token: cookie.get('acct') })}
 }
 
 const handleDeleteComment = (commentId, forumId) => {
   const cookie = new Cookies()
-  axios.post('/api/delete-comment', { commentId: commentId, forumId: forumId, token: cookie.get('acct') })
+  const confirm = window.confirm('do you want to delete this comment?')
+  {confirm && axios.post('/api/delete-comment', { commentId: commentId, forumId: forumId, token: cookie.get('acct') })}
 }
 
 const setLiked = (setIsLiked, value, username, forumId) => {
@@ -142,7 +144,7 @@ function ViewForum() {
             {!isLiked && <Like width="20px" onClick={() => setLiked(setIsLiked, true, profile.userName, forum.id)} />}
             {isLiked && <LikedButton width="20px" onClick={() => setLiked(setIsLiked, false, profile.userName, forum.id)} />}
             <span> Like </span>
-            <CopyToClipboard text={`http://letsdiscuss.loc/view-forum/${title}`} onCopy={() => setCopied(true)} style={{margin: "0 2em"}}>
+            <CopyToClipboard text={`http://localhost/view-forum/${title}`} onCopy={() => setCopied(true)} style={{margin: "0 2em"}}>
               <label><Share fill={copied ? 'red' : 'black'} width="20px" /><span> share</span></label>
             </CopyToClipboard>
             { profile && JSON.stringify(forum) !== '{}' && profile.userName === forum.userName && <Button onClick={() => handleDeleteForum(forum.id)}>Delete</Button>}

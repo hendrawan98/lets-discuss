@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -35745,10 +35745,10 @@ Typography.defaultProps = {
 
 /***/ }),
 
-/***/ "./resources/js/pages/login/index.js":
-/*!*******************************************!*\
-  !*** ./resources/js/pages/login/index.js ***!
-  \*******************************************/
+/***/ "./resources/js/pages/conference/create-conference/index.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/pages/conference/create-conference/index.js ***!
+  \******************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -35826,38 +35826,8 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
-function _templateObject5() {
-  var data = _taggedTemplateLiteral(["\n  padding-top: 20px;\n"]);
-
-  _templateObject5 = function _templateObject5() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject4() {
-  var data = _taggedTemplateLiteral(["\n  display: flex;\n  align-items: center;\n"]);
-
-  _templateObject4 = function _templateObject4() {
-    return data;
-  };
-
-  return data;
-}
-
-function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n  width: 27em;\n  float: right;\n"]);
-
-  _templateObject3 = function _templateObject3() {
-    return data;
-  };
-
-  return data;
-}
-
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n  width: 43.7em;\n  float: left;\n"]);
+  var data = _taggedTemplateLiteral(["\n  margin: 10px auto;\n\n  input {\n    display: block;\n    width: 100%;\n    height: 48px;\n  }\n\n  textarea {\n    display: block;\n    width: 100%;\n    height: 150px;\n  }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -35900,98 +35870,60 @@ function _taggedTemplateLiteral(strings, raw) {
 
 
 var Container = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject());
-var LeftContainer = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject2());
-var RightContainer = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject3());
-var SectionTitle = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject4());
-var SectionContent = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject5());
+var FormGroup = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject2());
 
-var doLogin = function doLogin(username, password, e) {
-  e.preventDefault();
-  var cookies = new universal_cookie__WEBPACK_IMPORTED_MODULE_4__["default"]();
-  !username && password && alert('username must be filled');
-  username && !password && alert('password must be filled');
-  !username && !password && alert('username and password must be filled');
+var doPost = function doPost(title) {
+  !title && alert('Title must be filled');
 
-  if (username && password) {
-    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/login', {
-      username: username,
-      password: btoa(password)
+  if (title) {
+    var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_4__["default"]();
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/create-conference', {
+      title: title,
+      token: cookie.get('acct')
     }).then(function (res) {
-      var profile = JSON.stringify(res.data.profile);
-      localStorage.setItem('profile', JSON.stringify(res.data.profile)); // alert('a')
-
-      window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/';
-    }, function (res) {
-      alert('please login using valid username and password');
+      window.location.href = "/conference/".concat(title.split(' ').join('-'));
     });
   }
 };
 
-function Login() {
+function CreateConference() {
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(''),
       _React$useState2 = _slicedToArray(_React$useState, 2),
-      username = _React$useState2[0],
-      setUsername = _React$useState2[1];
-
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(''),
-      _React$useState4 = _slicedToArray(_React$useState3, 2),
-      password = _React$useState4[0],
-      setPassword = _React$useState4[1];
+      title = _React$useState2[0],
+      setTitle = _React$useState2[1];
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_layout__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Container, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       display: 'block'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons_logo_logo_svg__WEBPACK_IMPORTED_MODULE_10__["default"], {
-    width: "270px",
-    height: "47px"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_card__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_card__WEBPACK_IMPORTED_MODULE_6__["default"], {
     marginTop: 10,
-    padding: "20px"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-    onSubmit: function onSubmit(e) {
-      return doLogin(username, password, e);
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    placeholder: "Username",
+    padding: "20px",
+    width: "28em"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    placeholder: "Conference Title",
     onChange: function onChange(e) {
-      return setUsername(e.target.value);
-    },
-    style: {
-      display: 'block',
-      width: '100%',
-      height: '25px'
+      return setTitle(e.target.value);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    type: "password",
-    placeholder: "Password",
-    onChange: function onChange(e) {
-      return setPassword(e.target.value);
-    },
-    style: {
-      display: 'block',
-      width: '100%',
-      height: '25px'
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    onClick: function onClick() {
+      return doPost(title);
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_5__["default"], {
-    onClick: function onClick(e) {
-      return doLogin(username, password, e);
-    }
-  }, "Login"))))));
+  }, "Start")))));
 }
 
-Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Login, null), document.getElementById('login'));
+Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CreateConference, null), document.getElementById('create-conference'));
 
 /***/ }),
 
-/***/ 2:
-/*!*************************************************!*\
-  !*** multi ./resources/js/pages/login/index.js ***!
-  \*************************************************/
+/***/ 9:
+/*!************************************************************************!*\
+  !*** multi ./resources/js/pages/conference/create-conference/index.js ***!
+  \************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/macbook/Documents/letsDiscuss/resources/js/pages/login/index.js */"./resources/js/pages/login/index.js");
+module.exports = __webpack_require__(/*! /Users/macbook/Documents/letsDiscuss/resources/js/pages/conference/create-conference/index.js */"./resources/js/pages/conference/create-conference/index.js");
 
 
 /***/ })

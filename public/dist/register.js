@@ -36011,9 +36011,11 @@ function Header() {
     height: "31px"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
     paddingLeft: "1em",
-    margin: "0em 3em 0em 4.5em"
+    margin: "0em 3em 0em 4.5em",
+    href: "/view-forum"
   }, "Forum"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    margin: "0em 4.5em 0em 3em"
+    margin: "0em 4.5em 0em 3em",
+    href: "/conference"
   }, "Conference"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
     onSubmit: function onSubmit(e) {
       return handleSearch(e);
@@ -36047,7 +36049,7 @@ function Header() {
   }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
     margin: "0em 0em 0em 4.5em",
     onClick: function onClick() {
-      return window.location = '/';
+      return window.location = '#';
     }
   }, profile.userName));
 }
@@ -36720,6 +36722,10 @@ var FormGroupRadio = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].d
 
 var postRegister = function postRegister(data) {
   axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/registration', data).then(function (res) {
+    console.log('res', res);
+    var profile = JSON.stringify(res.data.profile);
+    console.log('profile2', profile);
+    localStorage.setItem('profile', JSON.stringify(res.data.profile));
     window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/';
   });
 }; // END OF PAGE FUNCTION
@@ -36799,42 +36805,42 @@ function Register() {
 
     if (validUsername !== 'loading') {
       if (!fullName) {
-        alert('Nama Lengkap anda wajib diisi');
+        alert('Fullname must be filled');
         isError = true;
       }
 
       if (!address) {
-        alert('alamat anda wajib diisi');
+        alert('Address must be filled');
         isError = true;
       }
 
       if (!username) {
-        alert('username wajib diisi');
+        alert('username must be filled');
         isError = true;
       }
 
       if (username && !validUsername) {
-        alert("".concat(username, " sudah dipakai silahkan gunakan username lain"));
+        alert("".concat(username, " not available, please use other username"));
         isError = true;
       }
 
       if (date && new Date(date) >= new Date() || !date) {
-        alert('Tanggal lahir harus lebih kecil dari tanggal hari ini');
+        alert('Birth date must less then current date');
         isError = true;
       }
 
       if (email && (!email.includes('@') || email.includes('@') && (email.indexOf('@') === 0 || email.indexOf('@') === email.length - 1) || !email.includes('@') || email.includes('.') && (email.indexOf('.') === 0 || email.indexOf('@') === email.length - 1)) || !email) {
-        alert('format email salah');
+        alert('Please check your email format');
         isError = true;
       }
 
       if (phone && (phone.length < 10 || phone.length > 12) || !phone) {
-        alert('nomor telpon seluler yang dimasukan salah');
+        alert('Please check your phone number');
         isError = true;
       }
 
       if (password !== confirmPassword) {
-        alert('password yang dimasukkan tidak sama');
+        alert('Password you insert not match');
         isError = true;
       }
 
@@ -36960,9 +36966,7 @@ function Register() {
     onClick: function onClick() {
       return doRegistration();
     }
-  }, "Register")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(RightContainer, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_card__WEBPACK_IMPORTED_MODULE_7__["default"], {
-    width: "28em"
-  }, "test"))));
+  }, "Register"))))));
 }
 
 Object(react_dom__WEBPACK_IMPORTED_MODULE_2__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(Register, null), document.getElementById('register'));

@@ -31,5 +31,6 @@ class LoginController extends BaseController
             return response()->json($content['data'], $result->getStatusCode())->cookie($cookie);
             // return redirect('/');
         }
+        return response()->json('', 400);
     }
 }
