@@ -147,14 +147,14 @@ function ViewForum() {
             <CopyToClipboard text={`http://localhost/view-forum/${title}`} onCopy={() => setCopied(true)} style={{margin: "0 2em"}}>
               <label><Share fill={copied ? 'red' : 'black'} width="20px" /><span> share</span></label>
             </CopyToClipboard>
-            { profile && JSON.stringify(forum) !== '{}' && profile.userName === forum.userName && <Button onClick={() => handleDeleteForum(forum.id)}>Delete</Button>}
+            { profile && JSON.stringify(forum) !== '{}' && (profile.userName === forum.userName || profile.userType === 'admin') && <Button onClick={() => handleDeleteForum(forum.id)}>Delete</Button>}
           </Card>
           { comments.length >= 0 && comments.map((val, key) => {
             return (
               <Card marginTop={10} padding="20px" width="28em" key={key}>
                 <b>{val.userName}</b> {val.created_at && val.created_at.split('T')[0]}
                 <Paragraph size={20}>{val.commentContent}</Paragraph>
-                { profile && JSON.stringify(forum) !== '{}' && profile.userName === val.userName && <Button onClick={() => handleDeleteComment(val.commentId, forum.id)}>Delete</Button>}
+                { profile && JSON.stringify(forum) !== '{}' && (profile.userName === val.userName || profile.userType === 'admin') && <Button onClick={() => handleDeleteComment(val.commentId, forum.id)}>Delete</Button>}
               </Card>
             )
           })}

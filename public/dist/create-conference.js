@@ -35882,6 +35882,8 @@ var doPost = function doPost(title) {
       token: cookie.get('acct')
     }).then(function (res) {
       window.location.href = "/conference/".concat(title.split(' ').join('-'));
+    }, function (res) {
+      alert('Failed to create conference');
     });
   }
 };

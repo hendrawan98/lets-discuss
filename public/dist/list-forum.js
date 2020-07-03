@@ -36826,19 +36826,19 @@ function ListForum() {
   var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_5__["default"]();
 
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState([{
-    text: 'terbaru',
+    text: 'latest',
     val: 'latest'
   }, {
-    text: 'terlama',
+    text: 'oldest',
     val: 'oldest'
   }, {
-    text: 'terpopuler',
+    text: 'popular',
     val: 'mostLike'
   }, {
-    text: 'like terbanyak',
+    text: 'most like',
     val: 'mostLike'
   }, {
-    text: 'view terbanyak',
+    text: 'most view',
     val: 'mostView'
   }]),
       _React$useState2 = _slicedToArray(_React$useState, 1),
@@ -36974,10 +36974,10 @@ function ListForum() {
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
         onClick: function onClick() {
-          return window.location.href = "/view-forum/".concat(val.forumTitle.split(' ').join('-'));
+          return window.location.href = "/view-forum/".concat(val.forumTitle.split(' ').join('-')(' ', '-'));
         }
       }, "Read"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_6__["CopyToClipboard"], {
-        text: "http://localhost/view-forum/".concat(val.forumTitle.split(' ').join('-')),
+        text: "http://localhost/view-forum/".concat(val.forumTitle.split(' ').join('-')(' ', '-')),
         onCopy: function onCopy() {
           return setCopied(true);
         },

@@ -40,7 +40,7 @@ const doPost = (title) => {
     axios.post('/api/create-conference', { title: title, token: cookie.get('acct') })
       .then(res => {
         window.location.href = `/conference/${title.split(' ').join('-')}`
-      })
+      }, res => {alert('Failed to create conference')})
   }
 }
 

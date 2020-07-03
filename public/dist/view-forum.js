@@ -37309,7 +37309,7 @@ function ViewForum() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_icons_share_share_svg__WEBPACK_IMPORTED_MODULE_15__["default"], {
     fill: copied ? 'red' : 'black',
     width: "20px"
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, " share"))), profile && JSON.stringify(forum) !== '{}' && profile.userName === forum.userName && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, " share"))), profile && JSON.stringify(forum) !== '{}' && (profile.userName === forum.userName || profile.userType === 'admin') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
     onClick: function onClick() {
       return handleDeleteForum(forum.id);
     }
@@ -37321,7 +37321,7 @@ function ViewForum() {
       key: key
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, val.userName), " ", val.created_at && val.created_at.split('T')[0], /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_paragraph__WEBPACK_IMPORTED_MODULE_11__["default"], {
       size: 20
-    }, val.commentContent), profile && JSON.stringify(forum) !== '{}' && profile.userName === val.userName && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
+    }, val.commentContent), profile && JSON.stringify(forum) !== '{}' && (profile.userName === val.userName || profile.userType === 'admin') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_7__["default"], {
       onClick: function onClick() {
         return handleDeleteComment(val.commentId, forum.id);
       }

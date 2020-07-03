@@ -37223,7 +37223,7 @@ function Homepage() {
       size: "24",
       color: "black",
       fontWeight: "bold",
-      href: "/conference"
+      href: "/conference/".concat(val.viConTitle.split(' ').join('-'))
     }, val && val.viConTitle), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("b", null, val && val.userName), " ", val && val.created_at.split('T')[0]);
   }))))));
 }

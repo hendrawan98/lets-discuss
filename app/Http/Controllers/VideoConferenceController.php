@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Conference;
 
-class ConferenceController extends Controller
+class VideoConferenceController extends Controller
 {
     public function viewConference($title = null) {
         if(!isset($_COOKIE['acct'])) return redirect('/login');

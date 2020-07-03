@@ -24,7 +24,7 @@ Route::group(['middleware' => ['jwt-auth', 'api']], function() {
     Route::post('/like', 'ForumController@postLike');
     Route::post('/comment', 'CommentController@postComment');
     Route::post('/delete-comment', 'CommentController@deleteComment');
-    Route::post('/create-conference', 'ConferenceController@postConference');
+    Route::post('/create-conference', 'VideoConferenceController@postConference');
 });
 
 Route::group(['middleware' => 'api'], function () {
@@ -33,8 +33,8 @@ Route::group(['middleware' => 'api'], function () {
     Route::get('/check-like', 'ForumController@getIsliked');
     Route::get('/list-forum', 'ForumController@getList');
     Route::get('/comment/{id}', 'CommentController@getComment');
-    Route::get('/list-conference', 'ConferenceController@getList');
-    Route::get('/conference/{id}', 'ConferenceController@getRemote');
+    Route::get('/list-conference', 'VideoConferenceController@getList');
+    Route::get('/conference/{id}', 'VideoConferenceController@getRemote');
     Route::post('/registration', 'RegisterController@postRegistration');
     Route::post('/login', 'LoginController@postLogin');
 });

@@ -45,11 +45,11 @@ const CardContainer = styled.div`
 function ListForum() {
   const cookie = new Cookies()
   const [sortBy] = React.useState([
-    {text: 'terbaru', val: 'latest'},
-    {text: 'terlama', val: 'oldest'},
-    {text: 'terpopuler', val: 'mostLike'},
-    {text: 'like terbanyak', val: 'mostLike'},
-    {text: 'view terbanyak', val: 'mostView'},
+    { text: 'latest', val: 'latest' },
+    { text: 'oldest', val: 'oldest' },
+    { text: 'popular', val: 'mostLike' },
+    { text: 'most like', val: 'mostLike' },
+    { text: 'most view', val: 'mostView' },
   ])
   const [isLoggedin] = React.useState(!!cookie.get('acct'))
   const [url] = React.useState(window.location.href.split('?'))
@@ -98,8 +98,8 @@ function ListForum() {
               </div>
               <div style={{float: 'right', width: '14.9em'}}>
                 <div style={{ marginLeft: '20px', height: '10em', display: 'flex', alignItems: 'center' }}>
-                  <Button onClick={() => window.location.href = `/view-forum/${val.forumTitle.split(' ').join('-')}`}>Read</Button><br />
-                  <CopyToClipboard text={`http://localhost/view-forum/${val.forumTitle.split(' ').join('-')}`} onCopy={() => setCopied(true)} style={{margin: "0 1.5em"}}>
+                  <Button onClick={() => window.location.href = `/view-forum/${val.forumTitle.split(' ').join('-')(' ', '-')}`}>Read</Button><br />
+                  <CopyToClipboard text={`http://localhost/view-forum/${val.forumTitle.split(' ').join('-')(' ', '-')}`} onCopy={() => setCopied(true)} style={{margin: "0 1.5em"}}>
                     <label><Share fill={copied ? 'red' : 'black'} width="20px" /><span> share</span></label>
                   </CopyToClipboard>
                 </div>
