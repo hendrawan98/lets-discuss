@@ -67,7 +67,7 @@ const postRegister = (data) => {
       console.log('profile2', profile)
       localStorage.setItem('profile', JSON.stringify(res.data.profile))
       window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/'
-    })
+    }, res => alert('failed to register, please retry'))
 }
 // END OF PAGE FUNCTION
 

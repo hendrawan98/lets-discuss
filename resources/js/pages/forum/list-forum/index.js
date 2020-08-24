@@ -75,7 +75,7 @@ function ListForum() {
       axios.get(`/api/list-forum?sort=${sort}&search=${search}`)
         .then(res => {
           setForums(res.data)
-        })
+        }, res => alert('failed to get data, please refresh'))
     }
     const timer = setTimeout(() => {
       getList()
@@ -98,8 +98,8 @@ function ListForum() {
               </div>
               <div style={{float: 'right', width: '14.9em'}}>
                 <div style={{ marginLeft: '20px', height: '10em', display: 'flex', alignItems: 'center' }}>
-                  <Button onClick={() => window.location.href = `/view-forum/${val.forumTitle.split(' ').join('-')(' ', '-')}`}>Read</Button><br />
-                  <CopyToClipboard text={`http://localhost/view-forum/${val.forumTitle.split(' ').join('-')(' ', '-')}`} onCopy={() => setCopied(true)} style={{margin: "0 1.5em"}}>
+                  <Button onClick={() => window.location.href = `/view-forum/${val.forumTitle.split(' ').join('-')}`}>Read</Button><br />
+                  <CopyToClipboard text={`http://localhost/view-forum/${val.forumTitle.split(' ').join('-')}`} onCopy={() => setCopied(true)} style={{margin: "0 1.5em"}}>
                     <label><Share fill={copied ? 'red' : 'black'} width="20px" /><span> share</span></label>
                   </CopyToClipboard>
                 </div>

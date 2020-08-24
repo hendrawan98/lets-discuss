@@ -73,8 +73,11 @@ const doComment = (comment, comments, setComment, forum) => {
         setComment('')
       })
       .catch(() => {
+        alert('failed to comment')
         setComment('')
       })}
+  } else {
+    window.location.href = '/login'
   }
 }
 
@@ -91,10 +94,16 @@ const handleDeleteComment = (commentId, forumId) => {
 }
 
 const setLiked = (setIsLiked, value, username, forumId) => {
-  axios.post('/api/like', { value: value, username: username, forumId: forumId })
-    .then(res => {
-      setIsLiked(value)
-    })
+  const cookie = new Cookies()
+  console.log(!localStorage.getItem('profile'))
+  if(!!localStorage.getItem('profile')) {
+    axios.post('/api/like', { value: value, username: username, forumId: forumId })
+      .then(res => {
+        setIsLiked(value)
+      }, res => {alert('failed to like')})
+  } else {
+    window.location.href = '/login'
+  }
 }
 
 function ViewForum() {
@@ -112,7 +121,7 @@ function ViewForum() {
       axios.get(`/api/view-forum?title=${title}`)
         .then( res => {
           setForum(res.data)
-        })
+        }, res => {alert('failed to get data')})
     }
     fetchData()
   }, [])
@@ -141,8 +150,8 @@ function ViewForum() {
             <b>{JSON.stringify(forum) !== '{}' && forum.userName}</b> {JSON.stringify(forum) !== '{}' && forum.created_at.split('T')[0]}
             <Paragraph size={24} fontWeight="bold">{JSON.stringify(forum) !== '{}' && forum.forumTitle}</Paragraph>
             <Paragraph size={20}>{JSON.stringify(forum) !== '{}' && forum.forumContent}</Paragraph>
-            {!isLiked && <Like width="20px" onClick={() => setLiked(setIsLiked, true, profile.userName, forum.id)} />}
-            {isLiked && <LikedButton width="20px" onClick={() => setLiked(setIsLiked, false, profile.userName, forum.id)} />}
+            {!isLiked && <Like width="20px" onClick={() => setLiked(setIsLiked, true, (profile.userName || null), forum.id)} />}
+            {isLiked && <LikedButton width="20px" onClick={() => setLiked(setIsLiked, false, (profile.userName || null), forum.id)} />}
             <span> Like </span>
             <CopyToClipboard text={`http://localhost/view-forum/${title}`} onCopy={() => setCopied(true)} style={{margin: "0 2em"}}>
               <label><Share fill={copied ? 'red' : 'black'} width="20px" /><span> share</span></label>

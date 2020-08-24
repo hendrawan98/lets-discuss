@@ -51227,6 +51227,16 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n  color: white;\n  margin: 0em 0em 0em 4.5em;\n  padding: 0 0.5em;\n  font-weight: normal;\n  size: 16px;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n  width: ", "px;\n  height: 20px;\n"]);
 
@@ -51271,6 +51281,7 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_tem
 var Input = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].input(_templateObject2(), function (props) {
   return props.loggedin ? 500 : 290;
 });
+var StyledLabel = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].label(_templateObject3());
 
 function Header() {
   var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_2__["default"]();
@@ -51292,6 +51303,13 @@ function Header() {
   var handleSearch = function handleSearch(e) {
     e.preventDefault();
     window.location.href = "/view-forum?search=".concat(search);
+  };
+
+  var doLogout = function doLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem('profile');
+    cookie.remove('acct');
+    window.location.reload();
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons_logo_logo_svg__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -51334,10 +51352,9 @@ function Header() {
     },
     backgroundColor: "#00CC00",
     color: "#FFFFFF"
-  }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    margin: "0em 0em 0em 4.5em",
-    onClick: function onClick() {
-      return window.location = '#';
+  }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLabel, {
+    onClick: function onClick(e) {
+      return doLogout(e);
     }
   }, profile.userName));
 }
@@ -51630,10 +51647,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "send", function() { return send; });
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
 /* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_0__);
+ // const socket = socketIO('https://88ad4b78e902.ngrok.io', { transports: ['websocket'] });
 
-var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_0___default()('https://88ad4b78e902.ngrok.io', {
+var socket = socket_io_client__WEBPACK_IMPORTED_MODULE_0___default()('http://localhost:3001', {
   transports: ['websocket']
-}); // const socket = socketIO('http://localhost:3001', {transports: ['websocket']});
+});
 
 var join = function join(room, callback) {
   // Listen for 'join' messages
@@ -52136,16 +52154,19 @@ var NeatRTC = function NeatRTC(config, sendCallback) {
             peerConnection['media'].removeStream(streamLocal);
           }
 
-          var videoElementLocal = document.getElementById(videoIdLocal);
-          videoElementLocal.pause();
+          var _videoElementLocal = document.getElementById(videoIdLocal);
+
+          _videoElementLocal.pause();
+
           if (streamLocal && streamLocal.getVideoTracks() && streamLocal.getVideoTracks()[0]) streamLocal.getVideoTracks()[0].stop();
           if (streamLocal && streamLocal.getAudioTracks() && streamLocal.getAudioTracks()[0]) streamLocal.getAudioTracks()[0].stop();
           if (streamLocal) streamLocal = null;
 
           if (!message.NO_RESET) {
             // videoElementLocal.removeAttribute('src'); // Chrome 71...
-            videoElementLocal.removeAttribute('srcObject');
-            videoElementLocal.load();
+            _videoElementLocal.removeAttribute('srcObject');
+
+            _videoElementLocal.load();
           }
 
           return mediaStreamRemoteRemoved();
@@ -52325,7 +52346,7 @@ var NeatRTC = function NeatRTC(config, sendCallback) {
     if (type.toLowerCase() === 'start') {
       navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia; // Configure getUserMedia
 
-      var video = {
+      var _video = {
         mandatory: {
           minWidth: 320,
           minHeight: 240,
@@ -52333,10 +52354,11 @@ var NeatRTC = function NeatRTC(config, sendCallback) {
           maxHeight: 480
         }
       };
-      var videoElementLocal = document.getElementById(videoIdLocal);
+
+      var _videoElementLocal2 = document.getElementById(videoIdLocal);
 
       if (resolution && resolution.toLowerCase() === 'hd720') {
-        video = {
+        _video = {
           mandatory: {
             minWidth: 1280,
             minHeight: 720,
@@ -52345,7 +52367,7 @@ var NeatRTC = function NeatRTC(config, sendCallback) {
           }
         };
       } else if (resolution && resolution.toLowerCase() === 'hd1080') {
-        video = {
+        _video = {
           mandatory: {
             minWidth: 1920,
             minHeight: 1080,
@@ -52355,16 +52377,18 @@ var NeatRTC = function NeatRTC(config, sendCallback) {
         };
       }
 
-      if (voice) video = false;
+      if (voice) _video = false;
       var CONSTRAINTS = {
         audio: true,
-        video: video
+        video: _video
       };
 
       var getUserMediaSuccess = function getUserMediaSuccess(stream) {
         streamLocal = stream;
-        videoElementLocal.srcObject = stream;
-        videoElementLocal.play();
+        _videoElementLocal2.srcObject = stream;
+
+        _videoElementLocal2.play();
+
         streamLocalConnected = true;
         log('Success access media');
         initMediaConnection('sendOffer');
@@ -52398,9 +52422,9 @@ var NeatRTC = function NeatRTC(config, sendCallback) {
           peerConnection['media'].removeStream(streamLocal);
         }
 
-        var _videoElementLocal = document.getElementById(videoIdLocal);
+        var _videoElementLocal3 = document.getElementById(videoIdLocal);
 
-        _videoElementLocal.pause();
+        _videoElementLocal3.pause();
 
         if (streamLocal && streamLocal.getVideoTracks() && streamLocal.getVideoTracks()[0]) streamLocal.getVideoTracks()[0].stop();
         if (streamLocal && streamLocal.getAudioTracks() && streamLocal.getAudioTracks()[0]) streamLocal.getAudioTracks()[0].stop();
@@ -52408,9 +52432,9 @@ var NeatRTC = function NeatRTC(config, sendCallback) {
 
         if (!NO_RESET) {
           // videoElementLocal.removeAttribute('src'); // Chrome 71...
-          _videoElementLocal.removeAttribute('srcObject');
+          _videoElementLocal3.removeAttribute('srcObject');
 
-          _videoElementLocal.load();
+          _videoElementLocal3.load();
         }
 
         if (!NO_MESSAGE && datachannelList && datachannelList['_default']) {
@@ -52522,6 +52546,40 @@ var NeatRTC = function NeatRTC(config, sendCallback) {
       }();
 
       _stream();
+    } else if (type.toLowerCase() === 'muted') {
+      var _CONSTRAINTS = {
+        audio: false,
+        video: video
+      };
+
+      var _getUserMediaSuccess = function _getUserMediaSuccess(stream) {
+        streamLocal = stream;
+        videoElementLocal.srcObject = stream;
+        videoElementLocal.play();
+        streamLocalConnected = true;
+        log('Success access media');
+        initMediaConnection('sendOffer');
+
+        if (datachannelList && datachannelList['_default']) {
+          var _DATA2 = {
+            channel: '_default',
+            message: {
+              type: 'mediaStreamStart',
+              voice: voice
+            }
+          };
+          datachannelList['_default'].send(JSON.stringify(_DATA2));
+        }
+
+        log('Media stream -> offer sent');
+      };
+
+      var _getUserMediaError = function _getUserMediaError(error) {
+        log('Error access media', error);
+        return false;
+      };
+
+      navigator.getUserMedia(_CONSTRAINTS, _getUserMediaSuccess, _getUserMediaError);
     }
   };
   /**
@@ -52708,10 +52766,15 @@ function RoomConference() {
       share = _React$useState10[0],
       setShare = _React$useState10[1];
 
-  var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(1),
+  var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(false),
       _React$useState12 = _slicedToArray(_React$useState11, 2),
-      client = _React$useState12[0],
-      setClient = _React$useState12[1];
+      mute = _React$useState12[0],
+      setMute = _React$useState12[1];
+
+  var _React$useState13 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(1),
+      _React$useState14 = _slicedToArray(_React$useState13, 2),
+      client = _React$useState14[0],
+      setClient = _React$useState14[1];
 
   var sendSignalingMessage = function sendSignalingMessage(message) {
     Object(_components_pages_conference_room_conference__WEBPACK_IMPORTED_MODULE_3__["send"])('signaling', {
@@ -52732,6 +52795,7 @@ function RoomConference() {
 
   var shareCamera = function shareCamera() {
     setShare(!share);
+    if (share) rtc.media('stopshare');else rtc.media('startshare');
   };
 
   var stopRemoteCamera = function stopRemoteCamera() {
@@ -52744,6 +52808,11 @@ function RoomConference() {
     rtc.send('text', {
       time: time
     });
+  };
+
+  var setMuted = function setMuted() {
+    setMute(!mute);
+    if (mute) rtc.media('start');else rtc.media('muted');
   };
 
   var title = function title() {
@@ -52816,9 +52885,9 @@ function RoomConference() {
     }
   }, "Start camera"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: function onClick() {
-      return shareCamera();
+      return setMuted();
     }
-  }, "Mute"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Total participant: ", client));
+  }, mute ? 'Mute' : 'Unmute'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", null, "Total participant: ", client));
 }
 
 Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(RoomConference, null), document.getElementById('room-conference'));

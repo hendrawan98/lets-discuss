@@ -36312,6 +36312,16 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n  color: white;\n  margin: 0em 0em 0em 4.5em;\n  padding: 0 0.5em;\n  font-weight: normal;\n  size: 16px;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n  width: ", "px;\n  height: 20px;\n"]);
 
@@ -36356,6 +36366,7 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_tem
 var Input = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].input(_templateObject2(), function (props) {
   return props.loggedin ? 500 : 290;
 });
+var StyledLabel = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].label(_templateObject3());
 
 function Header() {
   var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_2__["default"]();
@@ -36377,6 +36388,13 @@ function Header() {
   var handleSearch = function handleSearch(e) {
     e.preventDefault();
     window.location.href = "/view-forum?search=".concat(search);
+  };
+
+  var doLogout = function doLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem('profile');
+    cookie.remove('acct');
+    window.location.reload();
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons_logo_logo_svg__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -36419,10 +36437,9 @@ function Header() {
     },
     backgroundColor: "#00CC00",
     color: "#FFFFFF"
-  }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    margin: "0em 0em 0em 4.5em",
-    onClick: function onClick() {
-      return window.location = '#';
+  }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLabel, {
+    onClick: function onClick(e) {
+      return doLogout(e);
     }
   }, profile.userName));
 }
@@ -37119,9 +37136,12 @@ var doComment = function doComment(comment, comments, setComment, forum) {
         comments.push(res.data);
         setComment('');
       })["catch"](function () {
+        alert('failed to comment');
         setComment('');
       });
     }
+  } else {
+    window.location.href = '/login';
   }
 };
 
@@ -37149,13 +37169,22 @@ var handleDeleteComment = function handleDeleteComment(commentId, forumId) {
 };
 
 var setLiked = function setLiked(setIsLiked, value, username, forumId) {
-  axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/like', {
-    value: value,
-    username: username,
-    forumId: forumId
-  }).then(function (res) {
-    setIsLiked(value);
-  });
+  var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_5__["default"]();
+  console.log(!localStorage.getItem('profile'));
+
+  if (!!localStorage.getItem('profile')) {
+    axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/like', {
+      value: value,
+      username: username,
+      forumId: forumId
+    }).then(function (res) {
+      setIsLiked(value);
+    }, function (res) {
+      alert('failed to like');
+    });
+  } else {
+    window.location.href = '/login';
+  }
 };
 
 function ViewForum() {
@@ -37207,6 +37236,8 @@ function ViewForum() {
               case 0:
                 axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("/api/view-forum?title=".concat(title)).then(function (res) {
                   setForum(res.data);
+                }, function (res) {
+                  alert('failed to get data');
                 });
 
               case 1:
@@ -37291,12 +37322,12 @@ function ViewForum() {
   }, JSON.stringify(forum) !== '{}' && forum.forumContent), !isLiked && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_icons_like_like_svg__WEBPACK_IMPORTED_MODULE_14__["default"], {
     width: "20px",
     onClick: function onClick() {
-      return setLiked(setIsLiked, true, profile.userName, forum.id);
+      return setLiked(setIsLiked, true, profile.userName || null, forum.id);
     }
   }), isLiked && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(LikedButton, {
     width: "20px",
     onClick: function onClick() {
-      return setLiked(setIsLiked, false, profile.userName, forum.id);
+      return setLiked(setIsLiked, false, profile.userName || null, forum.id);
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("span", null, " Like "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(react_copy_to_clipboard__WEBPACK_IMPORTED_MODULE_6__["CopyToClipboard"], {
     text: "http://localhost/view-forum/".concat(title),

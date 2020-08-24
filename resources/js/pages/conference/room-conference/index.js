@@ -66,6 +66,7 @@ function RoomConference() {
   const [rtc, setRtc] = React.useState(null)
   const [cam, setCam] = React.useState(true)
   const [share, setShare] = React.useState(false)
+  const [mute, setMute] = React.useState(false)
   const [client, setClient] = React.useState(1)
 
   const sendSignalingMessage = (message) => {
@@ -84,6 +85,8 @@ function RoomConference() {
 
   const shareCamera = () => {
     setShare(!share)
+    if (share) rtc.media('stopshare')
+    else rtc.media('startshare')
   }
 
   const stopRemoteCamera = () => {
@@ -94,6 +97,12 @@ function RoomConference() {
   const sendText = () => {
     const time = (new Date).toTimeString().slice(0,8);
     rtc.send('text', { time });
+  }
+
+  const setMuted = () => {
+    setMute(!mute)
+    if (mute) rtc.media('start')
+    else rtc.media('muted')
   }
 
   const title = () => {
@@ -144,7 +153,7 @@ function RoomConference() {
         <button onClick={() => stopCamera()}>Stop camera</button> :
         <button onClick={() => startCamera()}>Start camera</button>
       }
-      <button onClick={() => shareCamera()}>Mute</button>
+      <button onClick={() => setMuted()}>{mute ? 'Mute' : 'Unmute'}</button>
       <label>Total participant: {client}</label>
       {/* <div className="local-container">
         <h2>Local</h2>

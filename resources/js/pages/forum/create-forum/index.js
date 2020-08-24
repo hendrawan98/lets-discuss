@@ -47,7 +47,7 @@ const doPost = (title, description, content) => {
     axios.post('/api/create-forum', { title: title, description: description, content: content, token: cookie.get('acct') })
       .then(res => {
         window.location.href = `/view-forum/${title.split(' ').join('-')}`
-      })
+      }, res => alert('failed to create forum'))
   }
 }
 

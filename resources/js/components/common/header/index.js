@@ -21,6 +21,14 @@ const Input = styled.input`
   height: 20px;
 `
 
+const StyledLabel = styled.label`
+  color: white;
+  margin: 0em 0em 0em 4.5em;
+  padding: 0 0.5em;
+  font-weight: normal;
+  size: 16px;
+`;
+
 function Header() {
   const cookie = new Cookies()
   const [isLoggedin, setIsLoggedin] = React.useState(!!cookie.get('acct'))
@@ -29,6 +37,12 @@ function Header() {
   const handleSearch = e => {
     e.preventDefault()
     window.location.href = `/view-forum?search=${search}`
+  }
+  const doLogout = e => {
+    e.preventDefault()
+    localStorage.removeItem('profile')
+    cookie.remove('acct')
+    window.location.reload()
   }
   return (
     <Wrapper>
@@ -45,7 +59,7 @@ function Header() {
           <Button margin="0em 0em 0em 3em" onClick={() => window.location = '/register'} backgroundColor="#00CC00" color="#FFFFFF">Register</Button>
         </React.Fragment>
       )}
-      { isLoggedin && <Link margin="0em 0em 0em 4.5em" onClick={() => window.location = '#'} >{profile.userName}</Link>}
+      { isLoggedin && <StyledLabel onClick={e => doLogout(e)} >{profile.userName}</StyledLabel>}
     </Wrapper>
   )
 }

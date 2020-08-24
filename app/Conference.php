@@ -85,8 +85,8 @@ class Conference extends Model
                     'userName'          => $username->userName,
                     'viConTitle'        => $data['title'],
                     'viConType'         => 'public',
-                    'created_at'        => date('Y-m-d h:i:sa'),
-                    'updated_at'        => date('Y-m-d h:i:sa')
+                    'created_at'        => date('Y-m-d H:i:s'),
+                    'updated_at'        => date('Y-m-d H:i:s')
                 )
             );
         }catch(Exception $e) {

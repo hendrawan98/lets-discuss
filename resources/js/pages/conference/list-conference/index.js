@@ -75,7 +75,7 @@ function ListConference() {
       axios.get(`/api/list-conference?sort=${sort}&search=${search}`)
         .then(res => {
           setConferences(res.data)
-        })
+        }, res => {alert('failed to get data, please refresh')})
     }
     const timer = setTimeout(() => {
       getList()

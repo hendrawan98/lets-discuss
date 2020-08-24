@@ -686,6 +686,35 @@ const NeatRTC = (config, sendCallback) => {
         videoElementScreen.srcObject = mediaStream;
       }
       stream()
+    } else if (type.toLowerCase() === 'muted') {
+      const CONSTRAINTS = {
+        audio: false,
+        video: video
+      }
+      let getUserMediaSuccess = (stream) => {
+        streamLocal = stream
+        videoElementLocal.srcObject = stream
+        videoElementLocal.play()
+        streamLocalConnected = true
+        log('Success access media')
+        initMediaConnection('sendOffer')
+        if (datachannelList && datachannelList['_default']) {
+          const DATA = {
+            channel: '_default',
+            message: {
+              type: 'mediaStreamStart',
+              voice
+            }
+          }
+          datachannelList['_default'].send(JSON.stringify(DATA))
+        }
+        log('Media stream -> offer sent')
+      }
+      let getUserMediaError = (error) => {
+        log('Error access media', error)
+        return false
+      }
+      navigator.getUserMedia(CONSTRAINTS, getUserMediaSuccess, getUserMediaError)
     }
   }
 

@@ -35939,6 +35939,16 @@ function _arrayWithHoles(arr) {
   if (Array.isArray(arr)) return arr;
 }
 
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n  color: white;\n  margin: 0em 0em 0em 4.5em;\n  padding: 0 0.5em;\n  font-weight: normal;\n  size: 16px;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n  width: ", "px;\n  height: 20px;\n"]);
 
@@ -35983,6 +35993,7 @@ var Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].div(_tem
 var Input = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].input(_templateObject2(), function (props) {
   return props.loggedin ? 500 : 290;
 });
+var StyledLabel = styled_components__WEBPACK_IMPORTED_MODULE_1__["default"].label(_templateObject3());
 
 function Header() {
   var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_2__["default"]();
@@ -36004,6 +36015,13 @@ function Header() {
   var handleSearch = function handleSearch(e) {
     e.preventDefault();
     window.location.href = "/view-forum?search=".concat(search);
+  };
+
+  var doLogout = function doLogout(e) {
+    e.preventDefault();
+    localStorage.removeItem('profile');
+    cookie.remove('acct');
+    window.location.reload();
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons_logo_logo_svg__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -36046,10 +36064,9 @@ function Header() {
     },
     backgroundColor: "#00CC00",
     color: "#FFFFFF"
-  }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    margin: "0em 0em 0em 4.5em",
-    onClick: function onClick() {
-      return window.location = '#';
+  }, "Register")), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StyledLabel, {
+    onClick: function onClick(e) {
+      return doLogout(e);
     }
   }, profile.userName));
 }
@@ -36727,6 +36744,8 @@ var postRegister = function postRegister(data) {
     console.log('profile2', profile);
     localStorage.setItem('profile', JSON.stringify(res.data.profile));
     window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/';
+  }, function (res) {
+    return alert('failed to register, please retry');
   });
 }; // END OF PAGE FUNCTION
 
