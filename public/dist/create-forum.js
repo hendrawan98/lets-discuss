@@ -35844,7 +35844,7 @@ function _arrayWithHoles(arr) {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["\n  margin: 10px auto;\n\n  input {\n    display: block;\n    width: 100%;\n    height: 48px;\n  }\n\n  textarea {\n    display: block;\n    width: 100%;\n    height: 150px;\n  }\n"]);
+  var data = _taggedTemplateLiteral(["\n  margin: 10px auto;\n\n  input, select {\n    display: block;\n    width: 100%;\n    height: 48px;\n  }\n\n  textarea {\n    display: block;\n    width: 100%;\n    height: 150px;\n  }\n"]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -35930,6 +35930,16 @@ function CreateForum() {
       content = _React$useState6[0],
       setContent = _React$useState6[1];
 
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState([]),
+      _React$useState8 = _slicedToArray(_React$useState7, 2),
+      forumTopic = _React$useState8[0],
+      setForumTopic = _React$useState8[1];
+
+  react__WEBPACK_IMPORTED_MODULE_0___default.a.useEffect(function () {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/forum-topic').then(function (res) {
+      setForumTopic(res.data);
+    });
+  }, []);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_layout__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Container, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       display: 'block'
@@ -35943,7 +35953,16 @@ function CreateForum() {
     onChange: function onChange(e) {
       return setTitle(e.target.value);
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: null,
+    disabled: true,
+    selected: true
+  }, "Forum Topic"), forumTopic && forumTopic.map(function (val, id) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+      key: id,
+      value: val.topicId
+    }, val.topicName);
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
     placeholder: "Forum Description",
     onChange: function onChange(e) {
       return setDescription(e.target.value);

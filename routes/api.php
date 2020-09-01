@@ -30,6 +30,7 @@ Route::group(['middleware' => ['jwt-auth', 'api']], function() {
 Route::group(['middleware' => 'api'], function () {
     Route::get('/validate-username', 'RegisterController@getValidateUsername');
     Route::get('/view-forum', 'ForumController@getForum');
+    Route::get('/forum-topic', 'ForumController@getForumTopic');
     Route::get('/check-like', 'ForumController@getIsliked');
     Route::get('/list-forum', 'ForumController@getList');
     Route::get('/comment/{id}', 'CommentController@getComment');

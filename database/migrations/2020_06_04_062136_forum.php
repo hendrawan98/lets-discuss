@@ -25,6 +25,7 @@ class Forum extends Migration
             $table->decimal('forumViews');
             $table->decimal('forumSubscriber');
             $table->decimal('forumType');
+            $table->decimal('forumTopic');
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

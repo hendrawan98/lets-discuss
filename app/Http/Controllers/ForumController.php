@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Forum;
+use App\ForumTopic;
 
 class ForumController extends Controller
 {
@@ -15,6 +16,14 @@ class ForumController extends Controller
     public function viewForum($title = null) {
         if(!isset($title)) return view('listForum');
         return view('viewForum');
+    }
+
+    public function getForumTopic(ForumTopic $forumTopic){
+        $result = $forumTopic->getForumTopic();
+        $response = json_decode($result->getContent(), true);
+        if($response['success']) {
+            return response()->json($response['data'], $result->getStatusCode());
+        }
     }
 
     public function postCreateForum(Request $request) {

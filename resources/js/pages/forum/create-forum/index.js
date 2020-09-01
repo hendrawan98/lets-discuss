@@ -20,7 +20,7 @@ const Container = styled.div`
 const FormGroup = styled.div`
   margin: 10px auto;
 
-  input {
+  input, select {
     display: block;
     width: 100%;
     height: 48px;
@@ -55,6 +55,13 @@ function CreateForum() {
   const [title, setTitle] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [content, setContent] = React.useState('');
+  const [forumTopic, setForumTopic] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get('/api/forum-topic').then(res => {
+      setForumTopic(res.data)
+    })
+  }, [])
   return(
     <Layout>
       <Container>
@@ -62,6 +69,15 @@ function CreateForum() {
           <Card marginTop={10} padding="20px" width="28em">
             <FormGroup>
               <input placeholder="Forum Title" onChange={ e => setTitle(e.target.value) } />
+            </FormGroup>
+            <FormGroup>
+              {/* <input placeholder="Forum Topic" onChange={e => setTitle(e.target.value)} /> */}
+              <select>
+                <option value={null} disabled selected>Forum Topic</option>
+                {forumTopic && forumTopic.map((val,id) => {
+                  return <option key={id} value={val.topicId}>{val.topicName}</option>
+                })}
+              </select>
             </FormGroup>
             <FormGroup>
               <textarea placeholder="Forum Description" onChange={ e => setDescription(e.target.value) } />
