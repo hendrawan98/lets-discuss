@@ -62,11 +62,10 @@ const FormGroupRadio = styled.div`
 const postRegister = (data) => {
   axios.post('/api/registration', data)
     .then(res => {
-      console.log('res', res)
       const profile = JSON.stringify(res.data.profile)
-      console.log('profile2', profile)
-      localStorage.setItem('profile', JSON.stringify(res.data.profile))
-      window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/'
+      const previous = localStorage.getItem('previous')
+      localStorage.setItem('profile', profile)
+      window.location.href = previous ? previous : '/'
     }, res => alert('failed to register, please retry'))
 }
 // END OF PAGE FUNCTION

@@ -25,6 +25,7 @@ Route::group(['middleware' => ['jwt-auth', 'api']], function() {
     Route::post('/comment', 'CommentController@postComment');
     Route::post('/delete-comment', 'CommentController@deleteComment');
     Route::post('/create-conference', 'VideoConferenceController@postConference');
+    Route::post('/source', 'LearningSourceController@postSource');
 });
 
 Route::group(['middleware' => 'api'], function () {
@@ -36,6 +37,7 @@ Route::group(['middleware' => 'api'], function () {
     Route::get('/comment/{id}', 'CommentController@getComment');
     Route::get('/list-conference', 'VideoConferenceController@getList');
     Route::get('/conference/{id}', 'VideoConferenceController@getRemote');
+    Route::get('/list-learning-source', 'LearningSourceController@getList');
     Route::post('/registration', 'RegisterController@postRegistration');
     Route::post('/login', 'LoginController@postLogin');
 });

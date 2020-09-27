@@ -35935,7 +35935,7 @@ var doLogin = function doLogin(username, password, e) {
       password: btoa(password)
     }).then(function (res) {
       var profile = JSON.stringify(res.data.profile);
-      localStorage.setItem('profile', JSON.stringify(res.data.profile)); // alert('a')
+      localStorage.setItem('profile', profile); // alert('a')
 
       window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/';
     }, function (res) {

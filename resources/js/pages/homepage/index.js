@@ -11,9 +11,11 @@ import Layout from '@components/common/layout'
 import Typography from '@components/common/typography'
 import Paragraph from '@components/common/paragraph'
 import Link from '@components/common/link'
+import LearningSource from '@components/pages/home/learning-source'
 import Trending from '@icons/trending/trending.svg'
 import Conference from '@icons/conference/conference.svg'
 import Share from '@icons/share/share.svg'
+import Book from '@icons/book/book.svg'
 
 const Container = styled.div`
   &:after {
@@ -62,16 +64,25 @@ const ConferenceContent = styled.div`
 function Homepage() {
   const cookie = new Cookies
   const [isLoggedin] = React.useState(!!cookie.get('acct'))
+  const [forumTopic, setForumTopic] = React.useState([])
   const [forum, setForum] = React.useState([])
   const [conference, setConference] = React.useState([])
   const [copied, setCopied] = React.useState(false)
+
+  const getForum = (topic = "") => {
+    Axios.get(`/api/list-forum?sort&&limit&&topic=${topic}`)
+      .then(res => {
+        // console.log(res)
+        setForum(res.data)
+      })
+  }
+
   React.useEffect(() => {
     const getInit = async () => {
-      Axios.get('/api/list-forum?sort&&limit')
-        .then(res => {
-          // console.log(res)
-          setForum(res.data)
-        })
+      Axios.get('/api/forum-topic').then(res => {
+        setForumTopic(res.data)
+      })
+      getForum()
       Axios.get('/api/list-conference?sort&&limit')
         .then(res => {
           setConference(res.data)
@@ -96,6 +107,15 @@ function Homepage() {
             }
           </SectionTitle>
           <SectionContent>
+            <p>
+              <span>Topic: </span>
+              <select style={{ width: '15em' }} onChange={e => getForum(e.target.value)}>
+                <option disabled selected value="">Default</option>
+                { forumTopic.length > 0 && forumTopic.map((val, key) => {
+                  return <option key={key} value={val.topicId}>{val.topicName}</option>
+                })}
+              </select>
+            </p>
             { forum.length >= 0 && forum.map((val, key) => {
               return (
                 <Card marginTop={10} padding="20px" key={key}>
@@ -123,6 +143,7 @@ function Homepage() {
             }
           </SectionTitle>
           <SectionContent>
+            <p>&nbsp;</p>
             <Card marginTop={10}>
               { conference.length >= 0 && conference.map((val, key) => {
                 return (
@@ -135,6 +156,24 @@ function Homepage() {
             </Card>
           </SectionContent>
         </RightContainer>
+      </Container>
+
+      {/* Section Learning Source */}
+      <Container style={{paddingTop: '3em'}}>
+        <SectionTitle>
+          <TitleContainer float="left">
+            <Book width="45px" height="45px" />
+            <Typography fontSize={30} fontWeight="bold" lineHeight={45} type="span">Learning Source</Typography>
+          </TitleContainer>
+          <TitleContainer float="right">
+            <Button width='100px' height='43px' backgroundColor='#1B751D' color='#FFFFFF' onClick={() => window.location.assign('/learning-source')}>See More</Button>
+            <span style={{display: 'flex', alignItems: 'center', padding: '0 1em'}}>or</span>
+            <Button width='100px' height='43px' backgroundColor='#1B751D' color='#FFFFFF' onClick={() => window.location.assign('/contribute')}>Contribute</Button>
+          </TitleContainer>
+        </SectionTitle>
+        <SectionContent>
+          <LearningSource />
+        </SectionContent>
       </Container>
     </Layout>
   )

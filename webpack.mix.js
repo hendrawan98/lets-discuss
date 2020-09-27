@@ -23,6 +23,8 @@ mix.js('resources/js/app.js', 'public/js')
     .react('resources/js/pages/conference/room-conference/index.js', 'public/dist/room-conference.js')
     .react('resources/js/pages/conference/create-conference/index.js', 'public/dist/create-conference.js')
     .react('resources/js/pages/conference/list-conference/index.js', 'public/dist/list-conference.js')
+    .react('resources/js/pages/learning-source/list-learning-source/index.js', 'public/dist/list-learning-source.js')
+    .react('resources/js/pages/learning-source/create-learning-source/index.js', 'public/dist/contribute-learning-source.js')
 ;
 
 mix.webpackConfig({

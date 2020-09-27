@@ -33,7 +33,7 @@ const FormGroup = styled.div`
   }
 `
 
-const doPost = (title, description, content) => {
+const doPost = (title, description, content, topic) => {
   !title && description && content && alert('title wajib diisi')
   title && !description && content && alert('description wajib diisi')
   title && description && !content && alert('content wajib diisi')
@@ -44,7 +44,7 @@ const doPost = (title, description, content) => {
   !title && !description && !content && alert('title, description dan content wajib diisi')
   if(title && description && content) {
     const cookie = new Cookies()
-    axios.post('/api/create-forum', { title: title, description: description, content: content, token: cookie.get('acct') })
+    axios.post('/api/create-forum', { title: title, description: description, content: content, topic: topic, token: cookie.get('acct') })
       .then(res => {
         window.location.href = `/view-forum/${title.split(' ').join('-')}`
       }, res => alert('failed to create forum'))
@@ -53,6 +53,7 @@ const doPost = (title, description, content) => {
 
 function CreateForum() {
   const [title, setTitle] = React.useState('');
+  const [topic, setTopic] = React.useState(null);
   const [description, setDescription] = React.useState('');
   const [content, setContent] = React.useState('');
   const [forumTopic, setForumTopic] = React.useState([]);
@@ -71,8 +72,7 @@ function CreateForum() {
               <input placeholder="Forum Title" onChange={ e => setTitle(e.target.value) } />
             </FormGroup>
             <FormGroup>
-              {/* <input placeholder="Forum Topic" onChange={e => setTitle(e.target.value)} /> */}
-              <select>
+              <select onChange={e => setTopic(e.target.value)}>
                 <option value={null} disabled selected>Forum Topic</option>
                 {forumTopic && forumTopic.map((val,id) => {
                   return <option key={id} value={val.topicId}>{val.topicName}</option>
@@ -85,7 +85,7 @@ function CreateForum() {
             <FormGroup>
               <textarea placeholder="Forum Content" onChange={ e => setContent(e.target.value) } />
             </FormGroup>
-            <Button onClick={() => doPost(title, description, content)}>Post</Button>
+            <Button onClick={() => doPost(title, description, content, topic)}>Post</Button>
           </Card>
         </div>
       </Container>

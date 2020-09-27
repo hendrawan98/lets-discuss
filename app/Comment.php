@@ -17,6 +17,7 @@ class Comment extends Model
     ];
 
     protected $dates = ['deleted_at'];
+    public $timestamps = true;
 
     public function getUsername($token) {
         if(isset($token)) {

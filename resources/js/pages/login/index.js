@@ -45,7 +45,7 @@ const doLogin = (username, password, e) => {
     axios.post('/api/login', { username: username, password: btoa(password) } )
       .then(res => {
         const profile = JSON.stringify(res.data.profile)
-        localStorage.setItem('profile', JSON.stringify(res.data.profile))
+        localStorage.setItem('profile', profile)
         // alert('a')
         window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/'
       }, res => {

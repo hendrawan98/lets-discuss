@@ -36739,11 +36739,10 @@ var FormGroupRadio = styled_components__WEBPACK_IMPORTED_MODULE_3__["default"].d
 
 var postRegister = function postRegister(data) {
   axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/registration', data).then(function (res) {
-    console.log('res', res);
     var profile = JSON.stringify(res.data.profile);
-    console.log('profile2', profile);
-    localStorage.setItem('profile', JSON.stringify(res.data.profile));
-    window.location.href = localStorage.getItem('previous') ? localStorage.getItem('previous') : '/';
+    var previous = localStorage.getItem('previous');
+    localStorage.setItem('profile', profile);
+    window.location.href = previous ? previous : '/';
   }, function (res) {
     return alert('failed to register, please retry');
   });

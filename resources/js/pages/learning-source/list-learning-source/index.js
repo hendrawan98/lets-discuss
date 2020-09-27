@@ -42,73 +42,62 @@ const CardContainer = styled.div`
   }
 `
 
-function ListForum() {
+function ListLearningSource() {
   const cookie = new Cookies()
   const [sortBy] = React.useState([
     { text: 'latest', val: 'latest' },
     { text: 'oldest', val: 'oldest' },
-    { text: 'popular', val: 'mostLike' },
-    { text: 'most like', val: 'mostLike' },
-    { text: 'most view', val: 'mostView' },
   ])
   const [isLoggedin] = React.useState(!!cookie.get('acct'))
   const [url] = React.useState(window.location.href.split('?'))
   const [params] = React.useState(url[url.length - 1].split('&'))
   const [sort, setSort] = React.useState('')
   const [search, setSearch] = React.useState('')
-  const [topic, setTopic] = React.useState('')
-  const [forumTopic, setForumTopic] = React.useState([])
-  const [forums, setForums] = React.useState([])
-  const [copied, setCopied] = React.useState(false)
+  const [learningSource, setLearningSource] = React.useState([])
 
   const getList = async () => {
-    axios.get(`/api/list-forum?sort=${sort}&search=${search}&topic=${topic}`)
+    axios.get(`/api/list-learning-source?sort=${sort}&search=${search}`)
       .then(res => {
-        setForums(res.data)
+        setLearningSource(res.data)
       }, res => alert('failed to get data, please refresh'))
   }
 
   React.useEffect(() => {
     const filteredParams = async () => {
       params.map(x => {
-        if(x.includes('sort')) {
+        if (x.includes('sort')) {
           setSort(x.slice(x.indexOf('=') + 1, x.length))
-        } else if(x.includes('search')) {
+        } else if (x.includes('search')) {
           setSearch(x.slice(x.indexOf('=') + 1, x.length))
         }
       })
     }
-    axios.get('/api/forum-topic').then(res => {
-      setForumTopic(res.data)
-    })
     filteredParams()
   }, [])
   React.useEffect(() => {
     const timer = setTimeout(() => {
       getList()
     }, 5000);
-    
+
     return () => clearTimeout(timer)
-  }, [search, sort, topic])
+  }, [search, sort])
   const Content = () => {
-    return(
-      forums && forums.map( (val, key) => {
+    return (
+      learningSource && learningSource.map((val, key) => {
         return (
           <Card marginTop={10} padding="20px" width="50em" key={key}>
             <CardContainer>
-              <div style={{float: 'left', width: '35em', borderRight: '1px solid black'}}>
-                <div style={{marginRight: '20px'}}>
+              <div style={{ float: 'left', width: '35em', borderRight: '1px solid black', display: 'flex' }}>
+                <div>
                   <b>{val.userName}</b> {val.created_at.split('T')[0]}
-                  <Paragraph size={24} fontWeight="bold">{val.forumTitle}</Paragraph>
-                  <Paragraph size={20}>{val.forumDescription}</Paragraph>
+                  <Paragraph size={24} fontWeight="bold">{val.sourceTitle}</Paragraph>
+                  <Paragraph size={20}>{val.sourceDesc}</Paragraph>
                 </div>
               </div>
-              <div style={{float: 'right', width: '14.9em'}}>
+              <div style={{ float: 'right', width: '14.9em' }}>
                 <div style={{ marginLeft: '20px', height: '10em', display: 'flex', alignItems: 'center' }}>
-                  <Button onClick={() => window.location.href = `/view-forum/${val.forumTitle.split(' ').join('-')}`}>Read</Button><br />
-                  <CopyToClipboard text={`http://localhost/view-forum/${val.forumTitle.split(' ').join('-')}`} onCopy={() => setCopied(true)} style={{margin: "0 1.5em"}}>
-                    <label><Share fill={copied ? 'red' : 'black'} width="20px" /><span> share</span></label>
-                  </CopyToClipboard>
+                  {val.typeId === 1 && <iframe src={val.sourceUrl.replace("watch?v=", "embed/")} style={{ width: '90%' }} />}
+                  {val.typeId === 2 && <Button onClick={() => window.location.assign(val.sourceUrl)}>Download</Button>}
                 </div>
               </div>
             </CardContainer>
@@ -121,33 +110,23 @@ function ListForum() {
     return (
       <CardContainer style={{ width: '52.5em' }}>
         <div style={{ float: 'left', width: '13em', height: '2.3em', display: 'flex', alignItems: 'center' }}>
-          <label style={{marginRight: '0.5em'}}>sortBy:</label>
-          <select style={{width: '10em'}} onChange={e => setSort(e.target.value)}>
-            { sortBy && sortBy.map((v, k) => {
+          <label style={{ marginRight: '0.5em' }}>sortBy:</label>
+          <select style={{ width: '10em' }} onChange={e => setSort(e.target.value)}>
+            {sortBy && sortBy.map((v, k) => {
               return <option value={v.val} key={k}>{v.text}</option>
             })}
           </select>
-          &emsp;
-          <label style={{ marginRight: '0.5em' }}>Topic:</label>
-          <select style={{ width: '25em' }} onChange={e => setTopic(e.target.value)}>
-            <option disabled selected value="">Default</option>
-            {forumTopic.length > 0 && forumTopic.map((val, key) => {
-              return <option key={key} value={val.topicId}>{val.topicName}</option>
-            })}
-          </select>
         </div>
-        { isLoggedin &&
-          <div style={{ float: 'right', width: '16.5em' }}>
-            <Button width='263px' height='43px' backgroundColor='#1B751D' color='#FFFFFF' onClick={() => window.location.href='/create-forum'}>Create Forum</Button>
-          </div>
-        }
+        <div style={{ float: 'right', width: '16.5em' }}>
+          <Button width='263px' height='43px' backgroundColor='#1B751D' color='#FFFFFF' onClick={() => window.location.assign('/contribute')}>Contribute</Button>
+        </div>
       </CardContainer>
     )
   }
-  return(
+  return (
     <Layout>
       <Container>
-        <div style={{display: 'block'}}>
+        <div style={{ display: 'block' }}>
           <ContentHead />
           <Content />
         </div>
@@ -157,5 +136,5 @@ function ListForum() {
 }
 
 render(
-    <ListForum />, document.getElementById('list-forum')
+  <ListLearningSource />, document.getElementById('list-learning-source')
 )

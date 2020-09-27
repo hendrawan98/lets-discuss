@@ -1,9 +1,11 @@
 {
+    "/dist/contribute-learning-source.js": "/dist/contribute-learning-source.js",
     "/dist/create-conference.js": "/dist/create-conference.js",
     "/dist/create-forum.js": "/dist/create-forum.js",
     "/dist/homepage.js": "/dist/homepage.js",
     "/dist/list-conference.js": "/dist/list-conference.js",
     "/dist/list-forum.js": "/dist/list-forum.js",
+    "/dist/list-learning-source.js": "/dist/list-learning-source.js",
     "/dist/login.js": "/dist/login.js",
     "/dist/register.js": "/dist/register.js",
     "/dist/room-conference.js": "/dist/room-conference.js",

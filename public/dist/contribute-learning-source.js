@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -35762,10 +35762,10 @@ Typography.defaultProps = {
 
 /***/ }),
 
-/***/ "./resources/js/pages/forum/create-forum/index.js":
-/*!********************************************************!*\
-  !*** ./resources/js/pages/forum/create-forum/index.js ***!
-  \********************************************************/
+/***/ "./resources/js/pages/learning-source/create-learning-source/index.js":
+/*!****************************************************************************!*\
+  !*** ./resources/js/pages/learning-source/create-learning-source/index.js ***!
+  \****************************************************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -35889,42 +35889,16 @@ function _taggedTemplateLiteral(strings, raw) {
 var Container = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject());
 var FormGroup = styled_components__WEBPACK_IMPORTED_MODULE_2__["default"].div(_templateObject2());
 
-var doPost = function doPost(title, description, content, topic) {
-  !title && description && content && alert('title wajib diisi');
-  title && !description && content && alert('description wajib diisi');
-  title && description && !content && alert('content wajib diisi');
-  !title && !description && content && alert('title dan description wajib diisi');
-  !title && description && !content && alert('title dan content wajib diisi');
-  title && !description && !content && alert('description dan content wajib diisi');
-  !title && !description && content && alert('title dan description wajib diisi');
-  !title && !description && !content && alert('title, description dan content wajib diisi');
-
-  if (title && description && content) {
-    var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_4__["default"]();
-    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/create-forum', {
-      title: title,
-      description: description,
-      content: content,
-      topic: topic,
-      token: cookie.get('acct')
-    }).then(function (res) {
-      window.location.href = "/view-forum/".concat(title.split(' ').join('-'));
-    }, function (res) {
-      return alert('failed to create forum');
-    });
-  }
-};
-
-function CreateForum() {
+function CreateLearningSource() {
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(''),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       title = _React$useState2[0],
       setTitle = _React$useState2[1];
 
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(null),
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(0),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
-      topic = _React$useState4[0],
-      setTopic = _React$useState4[1];
+      type = _React$useState4[0],
+      setType = _React$useState4[1];
 
   var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(''),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
@@ -35936,16 +35910,57 @@ function CreateForum() {
       content = _React$useState8[0],
       setContent = _React$useState8[1];
 
-  var _React$useState9 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState([]),
+  var _React$useState9 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(''),
       _React$useState10 = _slicedToArray(_React$useState9, 2),
-      forumTopic = _React$useState10[0],
-      setForumTopic = _React$useState10[1];
+      videoUrl = _React$useState10[0],
+      setVideoUrl = _React$useState10[1];
 
-  react__WEBPACK_IMPORTED_MODULE_0___default.a.useEffect(function () {
-    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/forum-topic').then(function (res) {
-      setForumTopic(res.data);
-    });
-  }, []);
+  var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_0___default.a.useState(null),
+      _React$useState12 = _slicedToArray(_React$useState11, 2),
+      file = _React$useState12[0],
+      setFile = _React$useState12[1];
+
+  var doPost = function doPost() {
+    if (type) {
+      var form = new FormData();
+      var cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_4__["default"]();
+      form.append('title', title);
+      form.append('description', description);
+      form.append('typeId', type + 1);
+      form.append('file', file[0]);
+      form.append('token', cookie.get('acct'));
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/source', form, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      }).then(function (res) {
+        if (res.status === 201) {
+          alert('Success add learning source');
+          window.location.assign('/learning-source');
+        }
+      }, function (res) {
+        return alert('Failed add learning source, please submit again!');
+      });
+    } else {
+      var _cookie = new universal_cookie__WEBPACK_IMPORTED_MODULE_4__["default"]();
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/source', {
+        title: title,
+        description: description,
+        videoUrl: videoUrl,
+        typeId: type + 1,
+        token: _cookie.get('acct')
+      }).then(function (res) {
+        if (res.status === 201) {
+          alert('Success add learning source');
+          window.location.assign('/learning-source');
+        }
+      }, function (res) {
+        return alert('Failed add learning source, please submit again!');
+      });
+    }
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_layout__WEBPACK_IMPORTED_MODULE_7__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Container, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     style: {
       display: 'block'
@@ -35955,52 +35970,87 @@ function CreateForum() {
     padding: "20px",
     width: "28em"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-    placeholder: "Forum Title",
+    placeholder: "Learning Source Title",
     onChange: function onChange(e) {
       return setTitle(e.target.value);
+    },
+    value: title
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    style: {
+      display: 'flex'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    style: {
+      width: 'auto',
+      height: 'auto'
+    },
+    type: "radio",
+    id: "video",
+    name: "type",
+    value: 0,
     onChange: function onChange(e) {
-      return setTopic(e.target.value);
+      return setType(parseInt(e.target.value));
+    },
+    checked: type === 0
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "video"
+  }, "Video"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    style: {
+      width: 'auto',
+      height: 'auto'
+    },
+    type: "radio",
+    id: "file",
+    name: "type",
+    value: 1,
+    onChange: function onChange(e) {
+      return setType(parseInt(e.target.value));
+    },
+    checked: type === 1
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "file"
+  }, "File"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, !type && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    placeholder: "video url",
+    onChange: function onChange(e) {
+      setVideoUrl(e.target.value);
+    },
+    value: videoUrl
+  }), !!videoUrl && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("iframe", {
+    style: {
+      width: '101%',
+      height: '200px'
+    },
+    src: videoUrl.replace("watch?v=", "embed/")
+  })), !!type && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    placeholder: "upload",
+    type: "file",
+    onChange: function onChange(e) {
+      setFile(e.target.files);
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-    value: null,
-    disabled: true,
-    selected: true
-  }, "Forum Topic"), forumTopic && forumTopic.map(function (val, id) {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-      key: id,
-      value: val.topicId
-    }, val.topicName);
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-    placeholder: "Forum Description",
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+    placeholder: "Learning Source Description",
     onChange: function onChange(e) {
       return setDescription(e.target.value);
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(FormGroup, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
-    placeholder: "Forum Content",
-    onChange: function onChange(e) {
-      return setContent(e.target.value);
-    }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_button__WEBPACK_IMPORTED_MODULE_5__["default"], {
     onClick: function onClick() {
-      return doPost(title, description, content, topic);
+      return doPost();
     }
   }, "Post")))));
 }
 
-Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CreateForum, null), document.getElementById('create-forum'));
+Object(react_dom__WEBPACK_IMPORTED_MODULE_1__["render"])( /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(CreateLearningSource, null), document.getElementById('contribute-learning-source'));
 
 /***/ }),
 
-/***/ 4:
-/*!**************************************************************!*\
-  !*** multi ./resources/js/pages/forum/create-forum/index.js ***!
-  \**************************************************************/
+/***/ 12:
+/*!**********************************************************************************!*\
+  !*** multi ./resources/js/pages/learning-source/create-learning-source/index.js ***!
+  \**********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/macbook/Documents/letsDiscuss/resources/js/pages/forum/create-forum/index.js */"./resources/js/pages/forum/create-forum/index.js");
+module.exports = __webpack_require__(/*! /Users/macbook/Documents/letsDiscuss/resources/js/pages/learning-source/create-learning-source/index.js */"./resources/js/pages/learning-source/create-learning-source/index.js");
 
 
 /***/ })

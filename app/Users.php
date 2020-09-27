@@ -96,7 +96,7 @@ class Users extends Authenticatable implements JWTSubject
 
             $this->where('userName', $data['username'])->update(['accessToken' => $token]);
             
-            $response = ['success'=>true, 'data'=>['username'=>$user->userName, 'auth_token'=>$token]];
+            $response = ['success'=>true, 'data'=>['profile'=>$user, 'auth_token'=>$token]];
             
         return response()->json($response, 201);
     }

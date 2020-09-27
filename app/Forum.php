@@ -14,7 +14,8 @@ class Forum extends Model
         'userName',
         'forumTitle',
         'forumDescription',
-        'forumContent'
+        'forumContent',
+        'forumTopic'
     ];
     
     protected $dates = ['deleted_at'];
@@ -70,13 +71,15 @@ class Forum extends Model
 
     public function postForum(array $data) {
         $username = $this->getUsername($data['token']);
+        // dd($data['topic']);
         try {
             $this->create(
                 array(
                     'userName'          => $username->userName,
                     'forumTitle'        => $data['title'],
                     'forumDescription'  => $data['description'],
-                    'forumContent'      => $data['content']
+                    'forumContent'      => $data['content'],
+                    'forumTopic'        => (int)$data['topic']
                 )
             );
         }catch(Exception $e) {
@@ -118,36 +121,35 @@ class Forum extends Model
         switch ($data['sort']) {
             case 'search':
                 $response = $this->where('forumTitle', 'like', '%'.$data['search'].'%')
-                                ->orderBy('created_at', 'desc')
-                                ->get();
+                                ->orderBy('created_at', 'desc');
                 break;
             
             case 'oldest':
                 $response = $this->where('forumTitle', 'like', '%'.$data['search'].'%')
-                                ->orderBy('created_at', 'asc')
-                                ->get();
+                                ->orderBy('created_at', 'asc');
                 break;
 
             case 'mostLike':
                 $response = $this->where('forumTitle', 'like', '%'.$data['search'].'%')
                                 ->orderBy('created_at', 'desc')
-                                ->orderBy('forumLikes', 'desc')
-                                ->get();
+                                ->orderBy('forumLikes', 'desc');
                 break;
 
             case 'mostView':
                 $response = $this->where('forumTitle', 'like', '%'.$data['search'].'%')
                                 ->orderBy('created_at', 'desc')
-                                ->orderBy('forumViews', 'desc')
-                                ->get();
+                                ->orderBy('forumViews', 'desc');
                 break;
 
             default:
                 $response = $this->where('forumTitle', 'like', '%'.$data['search'].'%')
-                                ->orderBy('created_at', 'desc')
-                                ->get();
+                                ->orderBy('created_at', 'desc');
                 break;
         }
+        if(isset($data['topic'])) {
+            $response = $response->where('forumTopic', '=', $data['topic']);
+        }
+        $response = $response->get();
         return response()->json(['success' => true, 'data' => $response], 200);
     }
 

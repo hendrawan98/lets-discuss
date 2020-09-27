@@ -18,6 +18,7 @@ Route::get('/login', 'LoginController@index');
 Route::get('/register', 'RegisterController@index');
 Route::get('/create-forum', 'ForumController@createForum');
 Route::get('/view-forum/{title?}', 'ForumController@viewForum');
-Route::get('/list', 'ForumController@listForum');
 Route::get('/conference/{title?}', 'VideoConferenceController@viewConference');
 Route::get('/create-conference', 'VideoConferenceController@createConference');
+Route::get('/learning-source/{title?}', 'LearningSourceController@listLearningSource');
+Route::get('/contribute', 'LearningSourceController@contributeLearningSource');

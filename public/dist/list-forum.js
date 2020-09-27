@@ -36883,22 +36883,57 @@ function ListForum() {
       search = _React$useState12[0],
       setSearch = _React$useState12[1];
 
-  var _React$useState13 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState([]),
+  var _React$useState13 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState(''),
       _React$useState14 = _slicedToArray(_React$useState13, 2),
-      forums = _React$useState14[0],
-      setForums = _React$useState14[1];
+      topic = _React$useState14[0],
+      setTopic = _React$useState14[1];
 
-  var _React$useState15 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState(false),
+  var _React$useState15 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState([]),
       _React$useState16 = _slicedToArray(_React$useState15, 2),
-      copied = _React$useState16[0],
-      setCopied = _React$useState16[1];
+      forumTopic = _React$useState16[0],
+      setForumTopic = _React$useState16[1];
+
+  var _React$useState17 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState([]),
+      _React$useState18 = _slicedToArray(_React$useState17, 2),
+      forums = _React$useState18[0],
+      setForums = _React$useState18[1];
+
+  var _React$useState19 = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState(false),
+      _React$useState20 = _slicedToArray(_React$useState19, 2),
+      copied = _React$useState20[0],
+      setCopied = _React$useState20[1];
+
+  var getList = /*#__PURE__*/function () {
+    var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("/api/list-forum?sort=".concat(sort, "&search=").concat(search, "&topic=").concat(topic)).then(function (res) {
+                setForums(res.data);
+              }, function (res) {
+                return alert('failed to get data, please refresh');
+              });
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function getList() {
+      return _ref.apply(this, arguments);
+    };
+  }();
 
   react__WEBPACK_IMPORTED_MODULE_1___default.a.useEffect(function () {
     var filteredParams = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+      var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 params.map(function (x) {
                   if (x.includes('sort')) {
@@ -36910,52 +36945,30 @@ function ListForum() {
 
               case 1:
               case "end":
-                return _context.stop();
-            }
-          }
-        }, _callee);
-      }));
-
-      return function filteredParams() {
-        return _ref.apply(this, arguments);
-      };
-    }();
-
-    filteredParams();
-  }, []);
-  react__WEBPACK_IMPORTED_MODULE_1___default.a.useEffect(function () {
-    var getList = /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                axios__WEBPACK_IMPORTED_MODULE_4___default.a.get("/api/list-forum?sort=".concat(sort, "&search=").concat(search)).then(function (res) {
-                  setForums(res.data);
-                }, function (res) {
-                  return alert('failed to get data, please refresh');
-                });
-
-              case 1:
-              case "end":
                 return _context2.stop();
             }
           }
         }, _callee2);
       }));
 
-      return function getList() {
+      return function filteredParams() {
         return _ref2.apply(this, arguments);
       };
     }();
 
+    axios__WEBPACK_IMPORTED_MODULE_4___default.a.get('/api/forum-topic').then(function (res) {
+      setForumTopic(res.data);
+    });
+    filteredParams();
+  }, []);
+  react__WEBPACK_IMPORTED_MODULE_1___default.a.useEffect(function () {
     var timer = setTimeout(function () {
       getList();
     }, 5000);
     return function () {
       return clearTimeout(timer);
     };
-  }, [search, sort]);
+  }, [search, sort, topic]);
 
   var Content = function Content() {
     return forums && forums.map(function (val, key) {
@@ -37039,6 +37052,26 @@ function ListForum() {
         value: v.val,
         key: k
       }, v.text);
+    })), "\u2003", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("label", {
+      style: {
+        marginRight: '0.5em'
+      }
+    }, "Topic:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("select", {
+      style: {
+        width: '25em'
+      },
+      onChange: function onChange(e) {
+        return setTopic(e.target.value);
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("option", {
+      disabled: true,
+      selected: true,
+      value: ""
+    }, "Default"), forumTopic.length > 0 && forumTopic.map(function (val, key) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("option", {
+        key: key,
+        value: val.topicId
+      }, val.topicName);
     }))), isLoggedin && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
       style: {
         "float": 'right',
