@@ -37157,6 +37157,15 @@ var handleDeleteForum = function handleDeleteForum(id) {
     confirm && axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/delete-forum', {
       id: id,
       token: cookie.get('acct')
+    }).then(function (res) {
+      if (res.status === 204) {
+        alert('Success delete this forum');
+        window.location.assign('/view-forum');
+      } else {
+        alert('Failed delete this forum');
+      }
+    })["catch"](function (err) {
+      alert('Failed delete this forum');
     });
   }
 };

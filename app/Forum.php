@@ -162,6 +162,6 @@ class Forum extends Model
         }catch(Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed delete forum']);
         }
-        return response()->json(['success' => true], 204);
+        return response()->json(['success' => true], 500);
     }
 }

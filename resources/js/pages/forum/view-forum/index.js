@@ -84,7 +84,19 @@ const doComment = (comment, comments, setComment, forum) => {
 const handleDeleteForum = id => {
   const cookie = new Cookies()
   const confirm = window.confirm('do you want to delete this forum?')
-  {confirm && axios.post('/api/delete-forum', { id: id, token: cookie.get('acct') })}
+  {confirm && axios.post('/api/delete-forum', { id: id, token: cookie.get('acct') })
+    .then(res => {
+      if (res.status === 204) {
+        alert('Success delete this forum')
+        window.location.assign('/view-forum')
+      } else {
+        alert('Failed delete this forum')
+      }
+    })
+    .catch(err => {
+      alert('Failed delete this forum')
+    })
+  }
 }
 
 const handleDeleteComment = (commentId, forumId) => {
