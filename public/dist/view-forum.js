@@ -36397,9 +36397,14 @@ function Header() {
     window.location.reload();
   };
 
+  var backToHomepage = function backToHomepage() {
+    window.location.assign('/');
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Wrapper, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_icons_logo_logo_svg__WEBPACK_IMPORTED_MODULE_5__["default"], {
     width: "149px",
-    height: "31px"
+    height: "31px",
+    onClick: backToHomepage
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_common_link__WEBPACK_IMPORTED_MODULE_4__["default"], {
     paddingLeft: "1em",
     margin: "0em 3em 0em 4.5em",

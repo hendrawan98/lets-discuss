@@ -44,9 +44,12 @@ function Header() {
     cookie.remove('acct')
     window.location.reload()
   }
+  const backToHomepage = () => {
+    window.location.assign('/')
+  }
   return (
     <Wrapper>
-      <Logo width="149px" height="31px" />
+      <Logo width="149px" height="31px" onClick={backToHomepage} />
       <Link paddingLeft="1em" margin="0em 3em 0em 4.5em" href="/view-forum">Forum</Link>
       <Link margin="0em 4.5em 0em 3em" href="/conference">Conference</Link>
       <form onSubmit={e => handleSearch(e)}>
